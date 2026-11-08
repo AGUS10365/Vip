@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CLASS SEAT SPINNER</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05091a;--bg2:#0a1229;--tx:#eef3ff;--mu:#8b97bd;--ln:rgba(255,255,255,.08);
+  --gl:rgba(255,255,255,.04);--gl2:rgba(255,255,255,.07);
+  --ac:#3b82f6;--ac2:#60a5fa;--er:#fb7185;--ok:#34d399;
+  color-scheme:dark;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;min-height:100vh;
+  font:400 15px/1.55 Poppins,system-ui,sans-serif;color:var(--tx);
+  background:
+    radial-gradient(1000px 600px at 5% -15%,#1e40af55,transparent 60%),
+    radial-gradient(800px 600px at 100% 0%,#0e2a6b66,transparent 55%),
+    radial-gradient(600px 500px at 50% 120%,#1d4ed422,transparent 60%),
+    var(--bg);
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+h2,h3{margin:0 0 6px}h3{font-size:16px;letter-spacing:-.01em}
+.g{
+  background:linear-gradient(160deg,var(--gl2),var(--gl));
+  border:1px solid var(--ln);border-radius:22px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -24px rgba(0,0,0,.6);
+}
+.b{
+  position:relative;overflow:hidden;padding:.65em 1.15em;border-radius:12px;
+  border:1px solid var(--ln);background:var(--gl2);color:inherit;
+  font:600 14px Poppins,sans-serif;cursor:pointer;
+  transition:transform .15s,background .2s,border-color .2s;
+}
+.b:hover{transform:translateY(-1px);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16)}
+.b:active{transform:scale(.97)}
+.b.p{background:linear-gradient(135deg,var(--ac),#1d4ed8);border:0;box-shadow:0 10px 24px -10px var(--ac)}
+.b:disabled{opacity:.4;pointer-events:none}
+.b::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);transform:translateX(-120%);transition:transform .6s}
+.b:hover::after{transform:translateX(120%)}
+.rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}
+.big{padding:.85em 1.6em;font-size:16px}
+.in{
+  width:100%;padding:12px 14px;border-radius:12px;
+  border:1px solid var(--ln);background:rgba(0,0,0,.32);color:inherit;
+  font:inherit;transition:border-color .2s,box-shadow .2s;
+}
+.in:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(59,130,246,.25)}
+select.in option{background:#0b1430}
+.mu{color:var(--mu)}.s{font-size:12px}.er{color:var(--er);min-height:1.3em;margin:0;font-size:13px}
+
+/* ===== LOGIN ===== */
+.lg{display:grid;grid-template-columns:1.05fr .95fr;min-height:100vh}
+.hr{
+  padding:6vw;display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hr::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(600px 400px at 20% 30%,rgba(59,130,246,.25),transparent 70%);
+}
+.hr h1{
+  font-size:clamp(36px,5.2vw,68px);line-height:1.02;margin:0 0 16px;
+  font-weight:800;position:relative;letter-spacing:-.02em;
+  background:linear-gradient(180deg,#fff,#9db4ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hr p{color:var(--mu);max-width:26em;position:relative;font-size:16px}
+.hr .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);font-size:12px;font-weight:600;color:#93c5fd;margin-bottom:18px;position:relative;width:fit-content}
+.fl i{
+  position:absolute;font-style:normal;font-size:30px;padding:12px;border-radius:16px;
+  background:var(--gl2);border:1px solid var(--ln);
+  animation:fy 7s ease-in-out infinite;opacity:.9;
+}
+.cw{display:grid;place-items:center;padding:24px}
+.lc{
+  width:min(420px,100%);padding:32px;display:grid;gap:16px;
+  animation:sp .6s cubic-bezier(.2,1.2,.4,1);
+}
+.lc .av{
+  width:64px;height:64px;border-radius:20px;display:grid;place-items:center;font-size:32px;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 35%,transparent),color-mix(in srgb,var(--ac) 12%,transparent));
+  border:1px solid color-mix(in srgb,var(--ac) 40%,transparent);
+}
+.lc h2{font-size:22px;letter-spacing:-.01em}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;border-radius:14px;background:rgba(0,0,0,.32);border:1px solid var(--ln)}
+.seg button{
+  border:0;border-radius:10px;padding:9px 4px;background:none;color:var(--mu);
+  font:600 12px Poppins,sans-serif;cursor:pointer;transition:.25s;
+}
+.seg [aria-pressed=true]{background:linear-gradient(135deg,var(--ac),#1d4ed8);color:#fff;box-shadow:0 6px 16px -6px var(--ac)}
+.lfld{display:grid;gap:6px}
+.lfld label{font-size:12px;font-weight:600;color:var(--mu);letter-spacing:.02em}
+
+/* ===== APP SHELL ===== */
+.hd{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;margin:12px;
+  position:sticky;top:calc(12px + env(safe-area-inset-top,0px));z-index:20;
+  background:linear-gradient(160deg,rgba(20,32,70,.85),rgba(10,18,41,.85));
+}
+.lo{font-weight:800;letter-spacing:.02em;white-space:nowrap;font-size:14px;background:linear-gradient(90deg,#fff,#93c5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav{display:flex;gap:6px;flex:1;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav .b{white-space:nowrap;padding:8px 14px}
+nav .b[aria-pressed=true]{background:linear-gradient(135deg,var(--ac),#1d4ed8);border-color:transparent;box-shadow:0 8px 20px -8px var(--ac)}
+.rb{
+  padding:7px 14px;border-radius:99px;background:color-mix(in srgb,var(--ac) 18%,transparent);
+  border:1px solid color-mix(in srgb,var(--ac) 35%,transparent);
+  font-size:13px;font-weight:600;white-space:nowrap;
+}
+.pgm{max-width:1180px;margin:0 auto;padding:0 14px 60px}
+.nt{margin:0 0 12px;padding:10px 14px;border-radius:12px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25)}
+
+/* ===== SPIN LAYOUT ===== */
+.sp{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+.pad{padding:22px}
+.wc{padding:24px;display:grid;gap:20px}
+.wh{position:relative;width:min(100%,520px);aspect-ratio:1;margin:auto}
+canvas{width:100%;height:100%;display:block}
+.pt{position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:13px solid transparent;border-top:26px solid #fff;border-bottom:0;filter:drop-shadow(0 3px 4px rgba(0,0,0,.5))}
+.ctl,.row{display:flex;gap:8px;flex-wrap:wrap}
+.ctl{justify-content:center}.row{margin:12px 0}
+
+/* ===== STATS ===== */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{
+  padding:14px;border-radius:14px;background:rgba(255,255,255,.03);
+  border:1px solid var(--ln);transition:border-color .2s;
+}
+.stat:hover{border-color:rgba(59,130,246,.35)}
+.stat .v{font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+.stat .l{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.stat.a .v{color:var(--ac2)}.stat.g .v{color:var(--ok)}
+
+.pr{height:10px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden}
+.pr i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#60a5fa);transition:width .6s;box-shadow:0 0 16px rgba(59,130,246,.6)}
+
+.hi{
+  padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);
+  margin:6px 0;font-size:14px;animation:fi .3s;border:1px solid transparent;
+  transition:border-color .2s;
+}
+.hi:hover{border-color:rgba(59,130,246,.3)}
+.hi b{color:var(--ac2)}
+
+/* ===== SISWA / AKUN ===== */
+.li{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:6px 0}
+.li .in{flex:1}
+.ls{max-height:50vh;overflow:auto;margin-top:12px;padding-right:4px}
+.fm{display:grid;gap:10px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.bar .row{margin:0}
+.acc{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);
+  margin:6px 0;border:1px solid var(--ln);
+}
+
+/* ===== DENAH ===== */
+.board{
+  margin:14px 0;padding:12px;text-align:center;border-radius:12px;
+  background:linear-gradient(180deg,rgba(59,130,246,.14),rgba(59,130,246,.06));
+  border:1px solid rgba(59,130,246,.25);
+  font-size:12px;letter-spacing:.25em;font-weight:600;color:#93c5fd;
+}
+.dn{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tb{
+  padding:12px;border-radius:16px;border:1px solid var(--ln);
+  background:rgba(255,255,255,.03);transition:transform .25s,border-color .25s;
+  min-width:0;
+}
+.tb:hover{transform:translateY(-4px);border-color:var(--ac)}
+.tb.f{border-color:rgba(59,130,246,.5);background:linear-gradient(160deg,rgba(59,130,246,.18),rgba(255,255,255,.03))}
+.tb.hl{animation:hl 2.4s ease}
+.tb b{font-size:12px;color:var(--mu);letter-spacing:.03em}
+.st{display:flex;align-items:center;gap:8px;margin-top:8px;padding:7px 8px;border-radius:10px;font-size:13px;min-height:38px}
+.st i{font-style:normal;font-weight:700;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11px;flex:none}
+.st span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sa{background:rgba(59,130,246,.15)}.sa i{background:#3b82f6}
+.sb{background:rgba(56,189,248,.12)}.sb i{background:#0ea5e9}
+.st .e{color:var(--mu);font-style:italic}
+
+/* ===== POPUP ===== */
+.ov{position:fixed;inset:0;display:grid;place-items:center;background:rgba(3,6,18,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:50;animation:fi .2s}
+.sh{
+  width:min(420px,92vw);
+  background:linear-gradient(180deg,#17284f,#0b1430);
+  border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:30px;
+  text-align:center;animation:sp .55s cubic-bezier(.2,1.3,.4,1);
+  display:grid;gap:10px;box-shadow:0 40px 80px -20px rgba(0,0,0,.7);
+}
+.sh h2{font-size:28px;line-height:1.15;margin:0;word-break:break-word;letter-spacing:-.01em}
+.sh p{margin:0;color:var(--mu)}
+.em{font-size:48px;animation:bn 2s ease-in-out infinite}
+.tk{border-top:2px dashed rgba(255,255,255,.12);margin:12px -30px 0;padding-top:14px;color:var(--mu)}
+
+/* ===== UTIL ===== */
+.sk{border-radius:12px;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%) 0 0/200% 100%,rgba(255,255,255,.05);animation:sh 1.2s linear infinite}
+#toast{
+  position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  transform:translate(-50%,16px);background:#eef3ff;color:#05091a;
+  padding:11px 20px;border-radius:99px;font-weight:600;font-size:14px;
+  opacity:0;transition:.25s;z-index:70;pointer-events:none;max-width:92vw;text-align:center;
+  box-shadow:0 20px 40px -12px rgba(0,0,0,.5);
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+@keyframes rp{to{transform:scale(4);opacity:0}}
+@keyframes fi{from{opacity:0}}
+@keyframes sh{to{background-position:-200% 0}}
+@keyframes sp{from{opacity:0;transform:translateY(60px) rotate(-3deg) scale(.9)}}
+@keyframes bn{50%{transform:translateY(-6px) rotate(-4deg)}}
+@keyframes fy{50%{transform:translateY(-22px) rotate(8deg)}}
+@keyframes hl{0%{transform:scale(.94);box-shadow:0 0 0 0 rgba(96,165,250,.7)}40%{transform:scale(1.05);box-shadow:0 0 0 12px rgba(96,165,250,0)}}
+
+@media (max-width:900px){
+  .sp,.lg{grid-template-columns:1fr}
+  .hr{display:none}
+  .lo{display:none}
+}
+@media (max-width:560px){
+  .dn{gap:8px}.tb{padding:9px}
+  .st{font-size:11px;padding:5px;gap:5px}
+  .pad{padding:16px}.wc{padding:18px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats .stat:last-child{grid-column:span 2}
+  .rb{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="mod"></div><div id="toast" role="status" aria-live="polite"></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const N=42,RL={user:['Siswa','🎓','#38bdf8'],admin:['Admin','🧑‍🏫','#3b82f6'],dev:['Developer','🛠️','#818cf8']},PG={spin:'🎡 Spin',denah:'🪑 Denah',siswa:'👥 Siswa',akun:'🔐 Akun'};
+/* Developer hardcoded — tidak disimpan di S.akun */
+const DEV={u:'developer',nm:'Developer',p:'dev123',r:'dev'};
+const norm=d=>({students:d?.students||[],seats:(d?.seats||[]).concat(Array(N).fill('')).slice(0,N),hist:d?.hist||[],akun:d?.akun||[]});
+let S=norm(),me=null,pg='spin',ref=null,ready=false,mode='',busy=false,dirty=0,auto='',ang=0,muted=false,lr='user',snd=null,askFn=null,regMode=false;
+const sl=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=n=>{const a=new Uint32Array(1),m=Math.floor(2**32/n)*n;do crypto.getRandomValues(a);while(a[0]>=m);return a[0]%n};
+const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const left=()=>{const s=new Set(S.seats);return S.students.filter(n=>!s.has(n))},filled=()=>S.seats.filter(Boolean).length;
+const H=async p=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('kss:'+p)))].map(x=>x.toString(16).padStart(2,'0')).join('');
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2800)}
+function save(){if(ref)ref.set(S).catch(()=>toast('⚠️ Gagal menyimpan: akun Google/claude.ai kamu tidak punya izin menulis'));else try{localStorage.setItem('kss',JSON.stringify(S))}catch(e){}}
+/* suara */
+const ac=()=>snd||(snd=new(window.AudioContext||window.webkitAudioContext)());
+function tone(f,d,v=.04,t='sine',s=0){if(muted)return;try{const c=ac(),o=c.createOscillator(),g=c.createGain(),T=c.currentTime+s;o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.0001,T+d);o.connect(g).connect(c.destination);o.start(T);o.stop(T+d)}catch(e){}}
+const tick=()=>tone(700,.04,.03,'square'),chime=()=>[523,659,784,1047].forEach((f,i)=>tone(f,.3,.06,'triangle',i*.09));
+/* popup */
+function pop(h,ms,foot){$('#mod').innerHTML=`<div class="ov" data-a="cm"><div class="sh">${h}${foot??(ms?'':'<button class="b p" data-a="cm">Lanjut</button>')}</div></div>`;if(ms)setTimeout(()=>{if($('#mod .sh'))A.cm()},ms)}
+const ask=(t,m,ok,fn)=>{askFn=fn;pop(`<div class="em">🤔</div><h2>${t}</h2><p>${m}</p>`,0,`<div class="row" style="justify-content:center"><button class="b" data-a="cm">Batal</button><button class="b p" data-a="yes">${ok}</button></div>`)};
+function confetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=document.createElement('canvas'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:80';document.body.append(c);const cl=['#3b82f6','#60a5fa','#fff','#1d4ed8','#93c5fd'],p=[...Array(120)].map(()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*14-3,s:5+Math.random()*6,c:cl[Math.floor(Math.random()*5)],r:Math.random()*6}));let f=0;(function t(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.vy+=.35;q.x+=q.vx;q.y+=q.vy;q.r+=.2;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/2,q.s,q.s*.6);x.restore()});++f<130?requestAnimationFrame(t):c.remove()})()}
+/* tampilan */
+const skel=()=>`<div class="lg"><div class="hr"><div class="sk" style="height:64px;width:70%"></div><div class="sk" style="height:20px;width:50%;margin-top:14px"></div></div><div class="cw"><div class="g lc"><div class="sk" style="height:68px;width:68px"></div><div class="sk" style="height:28px"></div><div class="sk" style="height:46px"></div><div class="sk" style="height:46px"></div><div class="sk" style="height:46px"></div></div></div></div>`;
+
+function login(){
+  const R=RL[lr],D={
+    user:'Masuk atau daftar untuk melihat denah kelas.',
+    admin:'Khusus admin kelas. Akun dibuat oleh Developer.',
+    dev:'Akses penuh sistem. Hanya untuk Developer.'
+  };
+  const reg=lr==='user'&&regMode;
+  return `<div class="lg" style="--ac:${R[2]}">
+    <div class="hr">
+      <div class="fl">${[...'🪑🎡🎓📚✏️🏫'].map((e,i)=>`<i style="top:${8+i*15}%;left:${(i*31)%68+4}%;animation-delay:-${i}s">${e}</i>`).join('')}</div>
+      <span class="badge">✨ Seating chart generator</span>
+      <h1>CLASS<br>SEAT SPINNER</h1>
+      <p>Acak tempat duduk kelas dengan adil, otomatis, dan seru. Cukup satu klik — biar roda yang memilih.</p>
+    </div>
+    <div class="cw">
+      <form class="g lc" id="lf" data-mode="${reg?'reg':'login'}">
+        <div class="av">${reg?'📝':R[1]}</div>
+        <div>
+          <h2>${reg?'Daftar akun Siswa':'Masuk sebagai '+R[0]}</h2>
+          <span class="mu s">${reg?'Buat akun untuk melihat denah kelas.':D[lr]}</span>
+        </div>
+        <div class="seg">${Object.entries(RL).map(([k,v])=>`<button type="button" data-a="role" data-r="${k}" aria-pressed="${k===lr}">${v[1]} ${v[0]}</button>`).join('')}</div>
+        ${reg?`<div class="lfld"><label>Nama lengkap</label><input class="in" name="nm" placeholder="Contoh: Budi Santoso" required></div>`:''}
+        <div class="lfld"><label>Username</label><input class="in" name="u" placeholder="username" autocomplete="username" required></div>
+        <div class="lfld"><label>Kata sandi</label><input class="in" name="p" type="password" placeholder="••••••" autocomplete="${reg?'new-password':'current-password'}" required></div>
+        <p class="er" id="le" role="alert"></p>
+        <button class="b p big">${reg?'Daftar dan masuk':'Masuk ✨'}</button>
+        ${lr==='user'
+          ? reg
+            ? `<button type="button" class="b" data-a="toreg">← Sudah punya akun? Masuk</button>`
+            : `<button type="button" class="b" data-a="toreg">📝 Belum punya akun? Daftar</button>`
+          : ''}
+        ${mode?'<p class="mu s" style="margin:0;text-align:center">Mode lokal: data hanya tersimpan di perangkat ini.</p>':''}
+      </form>
+    </div>
+  </div>`;
+}
+
+const hist=n=>S.hist.length?S.hist.slice(0,n).map((h,i)=>`<div class="hi"><b>#${S.hist.length-i}</b> ${E(h.n)} <span class="mu">→ Meja ${(h.i>>1)+1} ${h.i%2?'B':'A'}</span></div>`).join(''):'<p class="mu s">Belum ada hasil spin. Tombol salin akan terisi setelah admin melakukan spin.</p>';
+
+function pSpin(){
+  const l=left(),f=filled(),full=f>=N,none=!l.length,off=busy||auto||full||none?'disabled':'';
+  const ab=!auto?`<button class="b" data-a="as" ${busy||full||none?'disabled':''}>⚡ START AUTO SPIN</button>`:auto==='run'?'<button class="b" data-a="ap">⏸ PAUSE</button><button class="b" data-a="ax">⏹ STOP</button>':'<button class="b p" data-a="ar">▶ RESUME</button><button class="b" data-a="ax">⏹ STOP</button>';
+  return `<div class="sp">
+    <section class="g wc">
+      <div class="wh"><canvas id="cv" aria-label="Roda putar nama siswa"></canvas><i class="pt"></i></div>
+      <div class="ctl"><button class="b p big" data-a="spin" ${off}>🎯 SPIN NOW</button>${ab}</div>
+      ${S.students.length?'':'<p class="mu" style="text-align:center;margin:0">Belum ada nama. Buka tab Siswa untuk menambahkan.</p>'}
+    </section>
+    <aside class="g pad">
+      <h3>📊 Progres</h3>
+      <div class="stats">
+        <div class="stat a"><div class="v">${f}</div><div class="l">Duduk</div></div>
+        <div class="stat"><div class="v">${l.length}</div><div class="l">Belum</div></div>
+        <div class="stat g"><div class="v">${Math.round(f/N*100)}%</div><div class="l">Selesai</div></div>
+      </div>
+      <div class="pr"><i style="width:${f/N*100}%"></i></div>
+      <p class="s mu" style="margin:8px 0 0"><b style="color:var(--tx)">${f}</b> / ${N} siswa sudah duduk • ${l.length} belum diundi</p>
+      <div class="row">
+        <button class="b" data-a="undo" ${busy||auto||!S.hist.length?'disabled':''}>↩️ Undo</button>
+        <button class="b" data-a="shuf" ${busy||auto?'disabled':''}>🔀 Acak urutan</button>
+        <button class="b" data-a="rst" ${busy?'disabled':''}>🗑️ Reset</button>
+      </div>
+      <h3 style="margin-top:18px">📜 Riwayat</h3>
+      ${hist(8)}
+    </aside>
+  </div>`;
+}
+
+function pDen(){
+  const h=S.hist[0],hl=h&&Date.now()-h.t<3500?h.i>>1:-1,sp=(v,c,l)=>`<div class="st ${c}"><i>${l}</i><span class="${v?'':'e'}">${v?E(v):'Kosong'}</span></div>`;
+  return `<div class="sp">
+    <section class="g pad">
+      <div class="bar">
+        <h3>🪑 Denah kelas</h3>
+        <div class="row">
+          <button class="b p" data-a="cp">📋 Salin hasil</button>
+          ${me.r!=='user'?'<button class="b" data-a="png">🖼️ Unduh PNG</button>':''}
+        </div>
+      </div>
+      <div class="board">🧑‍🏫 PAPAN TULIS</div>
+      <div class="dn">${Array.from({length:21},(_,k)=>{const a=S.seats[2*k],b=S.seats[2*k+1];return `<div class="tb ${a||b?'f':''} ${k===hl?'hl':''}"><b>Meja ${k+1}</b>${sp(a,'sa','A')}${sp(b,'sb','B')}</div>`}).join('')}</div>
+    </section>
+    <aside class="g pad">
+      <h3>📜 Hasil spin</h3>
+      ${hist(40)}
+      <p class="mu s">Hasil diperbarui langsung saat admin melakukan spin.</p>
+    </aside>
+  </div>`;
+}
+
+function pSis(){
+  const s=new Set(S.seats);
+  return `<section class="g pad">
+    <h3>👥 Daftar siswa (${S.students.length})</h3>
+    <p class="mu s" style="margin:4px 0 12px">Tempel daftar nama, satu per baris. Nama yang sudah duduk otomatis terkunci.</p>
+    <textarea id="bulk" class="in" rows="5" placeholder="Budi Santoso&#10;Siti Aminah&#10;Rian Hidayat&#10;..."></textarea>
+    <div class="row">
+      <button class="b p" data-a="addb">➕ Tambahkan</button>
+      <button class="b" data-a="clr">🧹 Hapus yang belum duduk</button>
+    </div>
+    <div class="ls">
+      ${S.students.map((n,i)=>`<div class="li"><input class="in" value="${E(n)}" data-i="${i}" ${s.has(n)?'disabled':''} aria-label="Nama siswa ${i+1}"><span>${s.has(n)?'🔒':`<button class="b" data-a="del" data-i="${i}" aria-label="Hapus ${E(n)}">🗑️</button>`}</span></div>`).join('')||'<p class="mu">Belum ada nama. Tempel daftar siswa di atas.</p>'}
+    </div>
+    <p class="mu s">Nama yang sudah duduk dikunci. Gunakan Undo atau Reset di tab Spin untuk mengubahnya.</p>
+  </section>`;
+}
+
+function pAk(){
+  const dev=me.r==='dev',ops=dev?['user','admin']:['user'];
+  return `<div class="sp">
+    <section class="g pad">
+      <h3>➕ Buat akun</h3>
+      <p class="mu s" style="margin:4px 0 14px">${dev?'Developer bisa membuat akun Admin dan Siswa.':'Admin bisa membuat akun Siswa.'} Catat kata sandinya, karena tidak bisa dilihat lagi.</p>
+      <form id="nf" class="fm">
+        <input class="in" name="nm" placeholder="Nama lengkap" required>
+        <input class="in" name="u" placeholder="Username" autocomplete="off" required>
+        <input class="in" name="p" type="text" placeholder="Kata sandi (min. 4)" autocomplete="off" required>
+        <select class="in" name="r" aria-label="Peran">${ops.map(r=>`<option value="${r}">${RL[r][1]} ${RL[r][0]}</option>`).join('')}</select>
+        <button class="b p">Buat akun</button>
+      </form>
+    </section>
+    <section class="g pad">
+      <h3>🔐 Daftar akun (${S.akun.length+(dev?1:0)})</h3>
+      ${dev?`<div class="acc"><span>🛠️ <b>${E(DEV.nm)}</b> <small class="mu">@${E(DEV.u)} • Developer • sistem</small></span></div>`:''}
+      ${S.akun.map(a=>`<div class="acc"><span>${RL[a.r][1]} <b>${E(a.nm)}</b> <small class="mu">@${E(a.u)} • ${RL[a.r][0]}</small></span>${(dev&&a.r!=='dev')||(!dev&&a.r==='user')?`<button class="b" data-a="dacc" data-u="${E(a.u)}">Hapus</button>`:''}</div>`).join('')}
+    </section>
+  </div>`;
+}
+
+function shell(){
+  const ok=me.r==='user'?['denah']:['spin','denah','siswa','akun'],P={spin:pSpin,denah:pDen,siswa:pSis,akun:pAk};
+  if(!ok.includes(pg))pg=ok[0];
+  return `<div style="--ac:${RL[me.r][2]}">
+    <header class="hd g">
+      <b class="lo">🎡 CLASS SEAT SPINNER</b>
+      <nav>${ok.map(p=>`<button class="b" data-a="tab" data-p="${p}" aria-pressed="${p===pg}">${PG[p]}</button>`).join('')}</nav>
+      <span class="rb">${RL[me.r][1]} ${E(me.nm)}</span>
+      <button class="b" data-a="fs" aria-label="Layar penuh">⛶</button>
+      <button class="b" data-a="mute" aria-label="Suara">${muted?'🔇':'🔊'}</button>
+      <button class="b" data-a="out">Keluar</button>
+    </header>
+    <main class="pgm">
+      ${mode?'<p class="mu s nt">☁️ Mode lokal: data hanya tersimpan di perangkat ini dan tidak dibagikan ke siswa lain.</p>':''}
+      ${P[pg]()}
+    </main>
+  </div>`;
+}
+
+function ren(){const a=$('#app');if(!ready){a.innerHTML=skel();return}a.innerHTML=me?shell():login();if(me&&pg==='spin')drawWheel()}
+
+/* roda */
+function drawWheel(){
+  const c=$('#cv');if(!c)return;
+  const w=c.clientWidth,d=devicePixelRatio||1;c.width=c.height=w*d;
+  const x=c.getContext('2d');x.scale(d,d);
+  const r=w/2,l=left(),n=l.length;x.clearRect(0,0,w,w);
+  if(!n){
+    x.fillStyle='#14224d';x.beginPath();x.arc(r,r,r-6,0,7);x.fill();
+    x.fillStyle='#fff';x.textAlign='center';x.font='600 18px Poppins,sans-serif';
+    x.fillText(filled()>=N?'🎉 Selesai':'Tambah nama siswa',r,r);return
+  }
+  const a=2*Math.PI/n,cl=['#1e3a8a','#0f1f4d','#2563eb','#13275f'];
+  l.forEach((nm,i)=>{
+    const s=ang+i*a;x.beginPath();x.moveTo(r,r);x.arc(r,r,r-6,s,s+a);
+    x.fillStyle=cl[i%4];x.fill();x.strokeStyle='rgba(255,255,255,.12)';x.stroke();
+    x.save();x.translate(r,r);x.rotate(s+a/2);x.fillStyle='#fff';x.textAlign='right';
+    x.font=`600 ${Math.max(9,Math.min(16,r*a*.55))}px Poppins,sans-serif`;
+    x.fillText(nm.length>14?nm.slice(0,13)+'…':nm,r-22,5);x.restore()
+  });
+  x.beginPath();x.arc(r,r,r*.13,0,7);x.fillStyle='#05091a';x.fill();
+  x.strokeStyle='#fff';x.lineWidth=3;x.stroke();
+  x.fillStyle='#fff';x.font='700 13px Poppins,sans-serif';x.textAlign='center';
+  x.fillText('SPIN',r,r+5)
+}
+function commit(n){const i=S.seats.findIndex(x=>!x);S.seats[i]=n;S.hist.unshift({n,i,t:Date.now()});save()}
+async function spin(){
+  const l=left();if(busy||!l.length||filled()>=N)return;busy=true;ren();
+  const w=rnd(l.length),a=2*Math.PI/l.length,M=2*Math.PI,T=-Math.PI/2-(w+.5)*a,
+    d=(((T-ang)%M)+M)%M+M*(5+rnd(3)),a0=ang,t0=performance.now();let lt=-1;
+  await new Promise(r=>{const f=t=>{
+    const p=Math.min(1,(t-t0)/4200);ang=a0+d*(1-Math.pow(1-p,3.4));
+    const k=Math.floor((((-Math.PI/2-ang)%M)+M)%M/a);
+    if(k!==lt){lt=k;tick()}drawWheel();p<1?requestAnimationFrame(f):r()
+  };requestAnimationFrame(f)});
+  ang%=M;const nm=l[w];commit(nm);busy=false;dirty=0;ren();win(nm)
+}
+function win(nm){const i=S.hist[0].i,f=filled();chime();if(f>=N)setTimeout(done,auto?2600:0);
+  pop(`<div class="em">🎟️</div><small class="mu">HASIL SPIN #${f}</small><h2>${E(nm)}</h2><p>🪑 Meja ${(i>>1)+1} • Kursi ${i%2?'B':'A'}</p><div class="tk"><small>${f} / ${N} siswa sudah duduk</small></div>`,auto?2300:0)}
+function done(){chime();confetti();pop('<div class="em">🏆</div><h2>SEATING PLAN<br>COMPLETED</h2><p>Semua 42 kursi sudah terisi. Salin atau unduh denahnya di tab Denah.</p>',0)}
+async function autoRun(){
+  auto='run';ren();
+  while(auto&&left().length&&filled()<N){
+    while(auto==='pause')await sl(200);
+    if(!auto)break;await spin();if(!auto)break;
+    for(let t=0;t<2500&&auto;){await sl(100);if(auto!=='pause')t+=100}
+  }
+  auto='';ren()
+}
+
+/* salin & unduh */
+const txt=()=>'🪑 DENAH TEMPAT DUDUK KELAS\n'+Array.from({length:21},(_,k)=>`📍 Meja ${k+1} : ${S.seats[2*k]?'👤 '+S.seats[2*k]:'—'} & ${S.seats[2*k+1]?'👤 '+S.seats[2*k+1]:'—'}`).join('\n')+`\n✅ ${filled()}/${N} siswa sudah duduk`;
+async function copy(t){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();document.execCommand('copy');a.remove()}toast('📋 Denah tersalin! Tinggal tempel di WhatsApp atau catatan')}
+async function dl(name,blob){try{const d=await claude.use('downloads');if(d){await d.save({filename:name,data:blob});return}}catch(e){if(e&&e.code==='declined')return}const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click()}
+function png(){
+  const c=document.createElement('canvas');c.width=1200;c.height=1560;const x=c.getContext('2d');
+  x.fillStyle='#05091a';x.fillRect(0,0,1200,1560);
+  x.fillStyle='#fff';x.textAlign='center';x.font='700 46px Poppins,sans-serif';x.fillText('DENAH TEMPAT DUDUK',600,86);
+  x.font='500 22px Poppins,sans-serif';x.fillStyle='#8b97bd';x.fillText('Papan tulis',600,124);
+  for(let k=0;k<21;k++){
+    const X=50+(k%3)*375,Y=150+Math.floor(k/3)*198;
+    x.fillStyle='#10204f';x.beginPath();x.roundRect(X,Y,350,176,22);x.fill();
+    x.textAlign='left';x.fillStyle='#8b97bd';x.font='600 22px Poppins,sans-serif';x.fillText('Meja '+(k+1),X+22,Y+40);
+    [0,1].forEach(j=>{
+      x.fillStyle=j?'#0ea5e9':'#3b82f6';x.beginPath();x.roundRect(X+20,Y+60+j*54,34,34,9);x.fill();
+      x.fillStyle='#fff';x.font='700 18px Poppins,sans-serif';x.fillText('AB'[j],X+30,Y+84+j*54);
+      x.font='500 24px Poppins,sans-serif';x.fillText((S.seats[2*k+j]||'—').slice(0,18),X+68,Y+86+j*54)
+    })
+  }
+  c.toBlob(b=>dl('denah-kelas.png',b))
+}
+
+/* akun */
+function enter(a){
+  me=a;try{localStorage.setItem('kss-me',a.u)}catch(e){}
+  pg=a.r==='user'?'denah':'spin';regMode=false;ren();
+  const W={user:['🎓','Halo, '+E(a.nm)+'!','Kamu bisa melihat denah dan hasil spin kelas secara langsung.'],admin:['🧑‍🏫','Selamat datang, '+E(a.nm),'Siap mengacak tempat duduk kelas hari ini?'],dev:['🛠️','Developer mode aktif','Kamu punya akses penuh, termasuk membuat akun Admin.']}[a.r];
+  pop(`<div class="em">${W[0]}</div><h2>${W[1]}</h2><p>${W[2]}</p>`,2200)
+}
+async function doLogin(f){
+  const d=new FormData(f),u=(d.get('u')||'').trim().toLowerCase(),p=d.get('p')||'',
+        er=m=>{$('#le').textContent=m},reg=f.dataset.mode==='reg';
+
+  // --- Developer hardcoded ---
+  if(!reg&&lr==='dev'){
+    if(u!==DEV.u||p!==DEV.p)return er('Username atau kata sandi Developer salah.');
+    return enter({u:DEV.u,nm:DEV.nm,r:'dev'});
+  }
+
+  // --- Registrasi (hanya Siswa) ---
+  if(reg){
+    if(lr!=='user')return er('Hanya Siswa yang bisa mendaftar. Akun Admin dibuat oleh Developer.');
+    const nm=(d.get('nm')||'').trim();
+    if(!nm)return er('Nama lengkap wajib diisi.');
+    if(!/^[a-z0-9_.]{3,20}$/.test(u))return er('Username 3–20 karakter: huruf kecil, angka, titik, atau garis bawah.');
+    if(p.length<4)return er('Kata sandi minimal 4 karakter.');
+    if(u===DEV.u)return er('Username ini sudah dipakai.');
+    if(S.akun.some(a=>a.u===u))return er('Username sudah dipakai. Coba yang lain.');
+    const acc={u,nm,h:await H(p),r:'user'};
+    S.akun.push(acc);save();regMode=false;
+    return enter(acc);
+  }
+
+  // --- Login biasa (user & admin) ---
+  if(lr==='dev')return er('Pilih tab Developer untuk masuk sebagai Developer.');
+  const a=S.akun.find(x=>x.u===u);
+  if(!a||a.h!==await H(p))return er('Username atau kata sandi salah.');
+  if(a.r!==lr)return er('Akun ini terdaftar sebagai '+RL[a.r][0]+'. Pilih tab '+RL[a.r][0]+' di atas.');
+  enter(a);
+}
+async function mkAcc(f){
+  const d=new FormData(f),u=d.get('u').trim().toLowerCase(),nm=d.get('nm').trim(),p=d.get('p'),r=d.get('r');
+  if(r==='dev'||(r==='admin'&&me.r!=='dev'))return;
+  if(!/^[a-z0-9_.]{3,20}$/.test(u))return toast('Username 3–20 karakter: huruf kecil, angka, titik, garis bawah');
+  if(p.length<4)return toast('Kata sandi minimal 4 karakter');
+  if(u===DEV.u||S.akun.some(a=>a.u===u))return toast('Username sudah dipakai');
+  S.akun.push({u,nm,h:await H(p),r});save();ren();toast('✅ Akun '+RL[r][0]+' @'+u+' dibuat')
+}
+
+/* aksi */
+const A={
+  role:b=>{lr=b.dataset.r;regMode=false;ren()},
+  toreg:()=>{regMode=!regMode;ren()},
+  tab:b=>{pg=b.dataset.p;ren()},
+  mute:()=>{muted=!muted;ren()},
+  out:()=>{auto='';me=null;regMode=false;try{localStorage.removeItem('kss-me')}catch(e){}ren()},
+  fs:()=>{document.fullscreenElement?document.exitFullscreen():(document.documentElement.requestFullscreen?.().catch(()=>toast('Layar penuh tidak didukung di sini')))},
+  cm:(b,e)=>{if(b&&b.classList&&b.classList.contains('ov')&&e&&e.target!==b)return;$('#mod').innerHTML=''},
+  yes:()=>{const f=askFn;A.cm();f&&f()},
+  spin:()=>spin(),
+  as:()=>{if(left().length&&filled()<N)autoRun()},
+  ap:()=>{auto='pause';ren()},
+  ar:()=>{auto='run';ren()},
+  ax:()=>{auto='';ren();toast('⏹ Auto spin dihentikan')},
+  undo:()=>{if(busy||auto||!S.hist.length)return;const h=S.hist.shift();S.seats[h.i]='';save();ren();toast('↩️ '+h.n+' kembali ke roda')},
+  shuf:()=>{S.students=shuf([...S.students]);save();ren();toast('🔀 Urutan nama diacak')},
+  rst:()=>ask('Reset semua hasil?','Seluruh hasil spin dihapus dan semua kursi dikosongkan. Daftar siswa tetap ada.','Ya, reset',()=>{auto='';S.seats=Array(N).fill('');S.hist=[];save();ren();toast('🗑️ Hasil spin direset')}),
+  addb:()=>{
+    const t=$('#bulk').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean),low=new Set(S.students.map(s=>s.toLowerCase()));let n=0;
+    t.forEach(s=>{if(!low.has(s.toLowerCase())){low.add(s.toLowerCase());S.students.push(s);n++}});
+    if(!n)return toast('Tidak ada nama baru (kosong atau sudah ada)');
+    save();ren();toast('✅ '+n+' nama ditambahkan'+(t.length>n?', '+(t.length-n)+' duplikat dilewati':''))
+  },
+  del:b=>{S.students.splice(+b.dataset.i,1);save();ren()},
+  clr:()=>ask('Hapus nama yang belum duduk?','Hanya siswa yang belum mendapat kursi yang dihapus dari daftar.','Ya, hapus',()=>{const s=new Set(S.seats);S.students=S.students.filter(n=>s.has(n));save();ren()}),
+  dacc:b=>ask('Hapus akun ini?','Akun @'+b.dataset.u+' tidak bisa masuk lagi setelah dihapus.','Ya, hapus',()=>{S.akun=S.akun.filter(a=>a.u!==b.dataset.u);save();ren()}),
+  cp:()=>filled()?copy(txt()):toast('Belum ada hasil spin untuk disalin. Tunggu admin melakukan spin ya 🙏'),
+  png
+};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.b');
+  if(b){
+    const r=b.getBoundingClientRect(),s=document.createElement('span'),z=Math.max(r.width,r.height);
+    s.className='rp';s.style.cssText=`width:${z}px;height:${z}px;left:${e.clientX-r.left-z/2}px;top:${e.clientY-r.top-z/2}px`;
+    b.append(s);setTimeout(()=>s.remove(),600)
+  }
+  const d=e.target.closest('[data-a]');if(d&&A[d.dataset.a])A[d.dataset.a](d,e)
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.classList.contains('in')&&t.dataset.i!=null){
+    const i=+t.dataset.i,v=t.value.trim();
+    if(!v||S.students.some((x,j)=>j!==i&&x.toLowerCase()===v.toLowerCase())){t.value=S.students[i];return toast('Nama kosong atau sudah ada')}
+    S.students[i]=v;save()
+  }
+});
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target;if(f.id==='lf')doLogin(f);if(f.id==='nf')mkAcc(f)});
+addEventListener('keydown',e=>{if(e.key==='Escape')A.cm()});
+addEventListener('resize',()=>{if(me&&pg==='spin'&&!busy)drawWheel()});
+
+/* mulai */
+function boot(){
+  const u=(()=>{try{return localStorage.getItem('kss-me')}catch(e){}})();
+  me = u===DEV.u ? {u:DEV.u,nm:DEV.nm,r:'dev'} : (S.akun.find(a=>a.u===u)||null);
+  if(me)pg=me.r==='user'?'denah':'spin';
+  ren();
+}
+function local(){if(ready)return;try{S=norm(JSON.parse(localStorage.getItem('kss')))}catch(e){S=norm()}ready=true;mode='lokal';boot()}
+ren();
+(async()=>{
+  const t=setTimeout(local,5000);let db=null;
+  try{db=await claude.use('db')}catch(e){}
+  if(!db){clearTimeout(t);return local()}
+  ref=db.doc('kelas/state');
+  ref.onSnapshot(s=>{
+    clearTimeout(t);S=norm(s.exists?s.data():null);
+    const f=!ready;ready=true;
+    if(f)boot();else if(busy)dirty=1;
+    else{me=me&&S.akun.find(a=>a.u===me.u)||null;ren()}
+  },()=>{ref=null;local()})
+})();
+</script>
+</body>
+</html>
