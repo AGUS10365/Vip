@@ -142,6 +142,160 @@ canvas{width:100%;height:100%;display:block}
 <body>
 <div id="app"></div><div id="mod"></div><div id="toast" role="status" aria-live="polite"></div>
 
+<!-- Script Utama (Tanpa Module, 100% Kompatibel) -->
+<script>
+const $=(s,r=document)=>r.querySelector(s),E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const N=42,RL={user:['Siswa','🎓','#38bdf8'],admin:['Admin','🧑‍🏫','#3b82f6'],dev:['Developer','🛠️','#818cf8']},PG={spin:'🎡 Spin',denah:'🪑 Denah',siswa:'👥 Siswa',akun:'🔐 Akun'};
+const DEV={u:'developer',nm:'Developer',p:'dev123',r:'dev'};
+const norm=d=>({students:d?.students||[],seats:(d?.seats||[]).concat(Array(N).fill('')).slice(0,N),hist:d?.hist||[],akun:d?.akun||[]});
+let S=norm(),me=null,pg='spin',ready=false,mode='',busy=false,dirty=0,auto='',ang=0,muted=false,lr='user',snd=null,askFn=null,regMode=false;
+const sl=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=n=>{const a=new Uint32Array(1),m=Math.floor(2**32/n)*n;do crypto.getRandomValues(a);while(a[0]>=m);return a[0]%n};
+const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const left=()=>{const s=new Set(S.seats);return S.students.filter(n=>!s.has(n))},filled=()=>S.seats.filter(Boolean).length;
+const H=async p=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('kss:'+p)))].map(x=>x.toString(16).padStart(2,'0')).join('');
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2800)}
+
+/* SISTEM FIREBASE VIA COMPAT SDK */
+let dbRef=null;
+function initFirebase() {
+  const script = document.createElement('script');
+  script.src = "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js";
+  script.onload = () => {
+    const script2 = document.createElement('script');
+    script2.src = "https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js";
+    script2.onload = () => {
+      const firebaseConfig = {
+        apiKey: "AIzaSyDQwwgvic_FAefgxi5TDRWsNXzH3ewlQNo",
+        authDomain: "clase-cbd9b.firebaseapp.com",
+        databaseURL: "https://clase-cbd9b-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "clase-cbd9b",
+        storageBucket: "clase-cbd9b.firebasestorage.app",
+        messagingSenderId: "475871117428",
+        appId: "1:475871117428:web:41544eb142073be01a1121"
+      };
+      firebase.initializeApp(firebaseConfig);
+      dbRef = firebase.database().ref('kelas/state');
+      
+      dbRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        S = norm(data);
+        const first = !ready;
+        ready = true;
+        
+        if (first) {
+          const u = (()=>{try{return localStorage.getItem('kss-me')}catch(e){}})();
+          me = u === DEV.u ? {u:DEV.u, nm:DEV.nm, r:'dev'} : (S.akun.find(a=>a.u===u) || null);
+          if (me) pg = me.r === 'user' ? 'denah' : 'spin';
+        } else {
+          if (me && me.u === DEV.u) {
+            me = {u:DEV.u, nm:DEV.nm, r:'dev'};
+          } else {
+            me = me && S.akun.find(a=>a.u===me.u) || null;
+          }
+        }
+        ren();
+      }, (error) => {
+        console.error(error);
+        document.getElementById('app').innerHTML = `
+          <div style="display:grid;place-items:center;height:100vh;text-align:center;padding:20px;font-family:Poppins;">
+            <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);padding:30px;border-radius:20px;max-width:400px;">
+              <h2 style="color:#fb7185;margin-bottom:10px;">Koneksi Database Gagal</h2>
+              <p style="color:#8b97bd;font-size:14px;line-height:1.5;">Pastikan aturan (Rules) Firebase Realtime Database kamu sudah diatur ke <b>".read": true, ".write": true</b>.</p>
+            </div>
+          </div>`;
+      });
+    };
+    document.body.appendChild(script2);
+  };
+  document.body.appendChild(script);
+}
+
+function save(){
+  if(dbRef) {
+    dbRef.set(S).catch((e)=>{
+      toast('⚠️ Gagal menyimpan ke server. Cek Firebase Rules.');
+      console.error(e);
+    });
+  }
+}
+
+initFirebase(); // Panggil Firebase
+
+/* suara */
+const ac=()=>snd||(snd=new(window.AudioContext||window.webkitAudioContext)());
+function tone(f,d,v=.04,t='sine',s=0){if(muted)return;try{const c=ac(),o=c.createOscillator(),g=c.createGain(),T=c.currentTime+s;o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,T);g.gain.exponentialRampToValueAtTime(.0001,T+d);o.connect(g).connect(c.destination);o.start(T);o.stop(T+d)}catch(e){}}
+const tick=()=>tone(700,.04,.03,'square'),chime=()=>[523,659,784,1047].forEach((f,i)=>tone(f,.3,.06,'triangle',i*.09));
+
+/* popup */
+function pop(h,ms,foot){$('#mod').innerHTML=`<div class="ov" data-a="cm"><div class="sh">${h}${foot??(ms?'':'<button class="b p" data-a="cm">Lanjut</button>')}</div></div>`;if(ms)setTimeout(()=>{if($('#mod .sh'))A.cm()},ms)}
+const ask=(t,m,ok,fn)=>{askFn=fn;pop(`<div class="em">🤔</div><h2>${t}</h2><p>${m}</p>`,0,`<div class="row" style="justify-content:center"><button class="b" data-a="cm">Batal</button><button class="b p" data-a="yes">${ok}</button></div>`)};
+function confetti(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;const c=document.createElement('canvas'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;c.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:80';document.body.append(c);const cl=['#3b82f6','#60a5fa','#fff','#1d4ed8','#93c5fd'],p=[...Array(120)].map(()=>({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*14-3,s:5+Math.random()*6,c:cl[Math.floor(Math.random()*5)],r:Math.random()*6}));let f=0;(function t(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.vy+=.35;q.x+=q.vx;q.y+=q.vy;q.r+=.2;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/2,q.s,q.s*.6);x.restore()});++f<130?requestAnimationFrame(t):c.remove()})()}
+
+/* tampilan */
+const skel=()=>`<div class="lg"><div class="hr"><div class="sk" style="height:64px;width:70%"></div><div class="sk" style="height:20px;width:50%;margin-top:14px"></div></div><div class="cw"><div class="g lc"><div class="sk" style="height:68px;width:68px"></div><div class="sk" style="height:28px"></div><div class="sk" style="height:46px"></div><div class="sk" style="height:46px"></div><div class="sk" style="height:46px"></div></div></div></div>`;
+
+function login(){
+  const R=RL[lr],D={user:'Masuk atau daftar untuk melihat denah kelas.',admin:'Khusus admin kelas. Akun dibuat oleh Developer.',dev:'Akses penuh sistem. Hanya untuk Developer.'};
+  const reg=lr==='user'&&regMode;
+  return `<div class="lg" style="--ac:${R[2]}">
+    <div class="hr">
+      <div class="fl">${[...'🪑🎡🎓📚✏️🏫'].map((e,i)=>`<i style="top:${8+i*15}%;left:${(i*31)%68+4}%;animation-delay:-${i}s">${e}</i>`).join('')}</div>
+      <span class="badge">✨ Seating chart generator</span>
+      <h1>CLASS<br>SEAT SPINNER</h1>
+      <p>Acak tempat duduk kelas dengan adil, otomatis, dan seru. Cukup satu klik — biar roda yang memilih.</p>
+    </div>
+    <div class="cw">
+      <form class="g lc" id="lf" data-mode="${reg?'reg':'login'}">
+        <div class="av">${reg?'📝':R[1]}</div>
+        <div>
+          <h2>${reg?'Daftar akun Siswa':'Masuk sebagai '+R[0]}</h2>
+          <span class="mu s">${reg?'Buat akun untuk melihat denah kelas.':D[lr]}</span>
+        </div>
+        <div class="seg">${Object.entries(RL).map(([k,v])=>`<button type="button" data-a="role" data-r="${k}" aria-pressed="${k===lr}">${v[1]} ${v[0]}</button>`).join('')}</div>
+        ${reg?`<div class="lfld"><label>Nama lengkap</label><input class="in" name="nm" placeholder="Contoh: Budi Santoso" required></div>`:''}
+        <div class="lfld"><label>Username</label><input class="in" name="u" placeholder="username" autocomplete="username" required></div>
+        <div class="lfld"><label>Kata sandi</label><input class="in" name="p" type="password" placeholder="••••••" autocomplete="${reg?'new-password':'current-password'}" required></div>
+        <p class="er" id="le" role="alert"></p>
+        <button class="b p big">${reg?'Daftar dan masuk':'Masuk ✨'}</button>
+        ${lr==='user' ? reg ? `<button type="button" class="b" data-a="toreg">← Sudah punya akun? Masuk</button>` : `<button type="button" class="b" data-a="toreg">📝 Belum punya akun? Daftar</button>` : ''}
+        <p class="mu s" style="margin:0;text-align:center">Live Sinkronisasi Firebase aktif.</p>
+      </form>
+    </div>
+  </div>`;
+}
+
+const hist=n=>S.hist.length?S.hist.slice(0,n).map((h,i)=>`<div class="hi"><b>#${S.hist.length-i}</b> ${E(h.n)} <span class="mu">→ Meja ${(h.i>>1)+1} ${h.i%2?'B':'A'}</span></div>`).sition:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:#eef3ff;color:#05091a;padding:11px 20px;border-radius:99px;font-weight:600;font-size:14px;opacity:0;transition:.25s;z-index:70;pointer-events:none;max-width:92vw;text-align:center;box-shadow:0 20px 40px -12px rgba(0,0,0,.5)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+@keyframes rp{to{transform:scale(4);opacity:0}}
+@keyframes fi{from{opacity:0}}
+@keyframes sh{to{background-position:-200% 0}}
+@keyframes sp{from{opacity:0;transform:translateY(60px) rotate(-3deg) scale(.9)}}
+@keyframes bn{50%{transform:translateY(-6px) rotate(-4deg)}}
+@keyframes fy{50%{transform:translateY(-22px) rotate(8deg)}}
+@keyframes hl{0%{transform:scale(.94);box-shadow:0 0 0 0 rgba(96,165,250,.7)}40%{transform:scale(1.05);box-shadow:0 0 0 12px rgba(96,165,250,0)}}
+
+@media (max-width:900px){
+  .sp,.lg{grid-template-columns:1fr}
+  .hr{display:none}
+  .lo{display:none}
+}
+@media (max-width:560px){
+  .dn{gap:8px}.tb{padding:9px}
+  .st{font-size:11px;padding:5px;gap:5px}
+  .pad{padding:16px}.wc{padding:18px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats .stat:last-child{grid-column:span 2}
+  .rb{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="mod"></div><div id="toast" role="status" aria-live="polite"></div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref as fref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
