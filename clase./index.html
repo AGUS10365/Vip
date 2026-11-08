@@ -1,1 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Seat Spinner — Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<div class="toast" id="toast">Pesan</div>
+
+<div id="login-view">
+  <div class="login-wrapper">
+    <div class="login-left">
+      <h1>Atur Posisi Duduk Jadi Lebih Seru.</h1>
+      <p>Sistem pengacakan tempat duduk kelas modern dengan visual interaktif dan transparan.</p>
+    </div>
+    <div class="login-right">
+      <h2 style="margin-bottom:30px;font-size:24px;">Selamat Datang 👋</h2>
+      <div class="input-group"><label>Username</label><span class="input-icon">👤</span><input type="text" id="login-user" class="input-field" placeholder="Masukkan username"></div>
+      <div class="input-group"><label>Password</label><span class="input-icon">🔒</span><input type="password" id="login-pass" class="input-field" placeholder="••••••"></div>
+      <button class="btn btn-primary" id="btn-login" style="width:100%;padding:18px;margin-top:10px;font-size:16px;" onclick="doLogin()">Masuk ke Sistem</button>
+    </div>
+  </div>
+</div>
+
+<div id="app-view" class="hidden">
+  <nav class="navbar"><div class="container flex justify-between items-center">
+    <div class="logo" id="logo-brand"><span>CS</span> Class Spinner</div>
+    <div class="nav-links" id="nav-links"></div>
+    <button class="btn btn-danger" onclick="doLogout()" style="padding:8px 16px;margin-left:15px;border-radius:10px;">Logout</button>
+  </div></nav>
+  
+  <div class="container">
+    <div class="view" id="view-spin">
+      <div class="spin-container">
+        <div class="wheel-wrapper"><div class="wheel-pointer"></div><canvas id="wheel-canvas" class="wheel-canvas" width="600" height="600"></canvas><div class="wheel-center">🎯</div></div>
+        <div class="progress-card"><div id="progress-text" style="font-weight:700;font-size:16px;">0 / 42 Kursi Terisi</div><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div></div>
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="btn-spin" onclick="manualSpin()" style="flex:2;">SPIN NOW</button>
+          <button class="btn btn-outline" id="btn-auto" onclick="toggleAutoSpin()">AUTO SPIN</button>
+        </div>
+        <div class="action-buttons">
+          <button class="btn btn-outline" id="btn-undo" onclick="undoSpin()">UNDO</button>
+          <button class="btn btn-danger" onclick="resetAll()">RESET</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="view" id="view-plan">
+      <div class="flex justify-between items-center" style="margin-bottom:10px;">
+        <h2>Denah Kelas</h2><button class="btn btn-outline" onclick="copyRekap()">📋 Copy Rekap</button>
+      </div>
+      <div class="classroom-container"><div class="whiteboard">PAPAN TULIS (DEPAN)</div><div class="desk-grid" id="desk-grid"></div></div>
+    </div>
+    
+    <div class="view" id="view-list" style="max-width:700px;margin:0 auto;">
+      <h2 style="margin-bottom:20px;">Daftar Nama Murid</h2>
+      <textarea id="input-names" placeholder="Ketik nama, pisahkan dengan ENTER..."></textarea>
+      <div style="margin-top:20px;text-align:right;"><button class="btn btn-primary" onclick="saveNames()" style="padding:16px 32px;">💾 SIMPAN DAFTAR</button></div>
+    </div>
+    
+    <div class="view" id="view-manage-users">
+      <div class="flex justify-between items-center" style="margin-bottom:20px;">
+        <h2>Kelola Pengguna</h2><button class="btn btn-primary" onclick="openUserModal()">➕ Buat Akun</button>
+      </div>
+      <div class="table-container"><table><thead><tr><th>Username</th><th>Role</th><th>Aksi</th></tr></thead><tbody id="user-table-body"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="popup-spin">
+  <div class="modal-content"><div style="font-size:50px;margin-bottom:15px;animation:bounce 1s infinite;">🎉</div><h3 id="popup-name" style="color:var(--primary);font-size:28px;">Nama</h3><p id="popup-seat" style="margin-bottom:25px;color:var(--text-muted);font-size:16px;">Meja 1 - Kursi A</p><button class="btn btn-primary" style="width:100%;padding:16px;" onclick="closePopup('popup-spin')">Tutup & Lanjut</button></div>
+</div>
+<div class="modal-overlay" id="popup-user">
+  <div class="modal-content">
+    <h3 style="margin-bottom:20px;">Buat Akun Baru</h3>
+    <input type="text" id="new-user-name" class="modal-input" placeholder="Username">
+    <input type="text" id="new-user-pass" class="modal-input" placeholder="Password">
+    <select id="new-user-role" class="modal-input"><option value="user">User (Hanya lihat)</option><option value="admin">Admin (Bisa spin)</option></select>
+    <div style="display:flex;gap:12px;margin-top:20px;"><button class="btn btn-outline" style="flex:1;" onclick="closePopup('popup-user')">Batal</button><button class="btn btn-primary" style="flex:1;" onclick="saveNewUser()">Simpan</button></div>
+  </div>
+</div>
+
+<style>@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}</style>
+<script src="script.js"></script>
+</body>
+</html>
