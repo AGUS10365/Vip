@@ -6,113 +6,223 @@
 <title>CLASS SEAT SPINNER</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#05091a;--tx:#eef3ff;--mu:#8b97bd;--ln:rgba(255,255,255,.08);
-  --gl:rgba(255,255,255,.04);--gl2:rgba(255,255,255,.07);
-  --ac:#3b82f6;--ac2:#60a5fa;--er:#fb7185;--ok:#34d399;
-  color-scheme:dark;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
+:root{--bg:#05091a;--tx:#eef3ff;--mu:#8b97bd;--ln:rgba(255,255,255,.08);--gl:rgba(255,255,255,.04);--gl2:rgba(255,255,255,.07);--ac:#3b82f6;--ac2:#60a5fa;--er:#fb7185;--ok:#34d399;color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;font:400 15px/1.55 Poppins,system-ui,sans-serif;color:var(--tx);background:radial-gradient(1000px 600px at 5% -15%,#1e40af55,transparent 60%),radial-gradient(800px 600px at 100% 0%,#0e2a6b66,transparent 55%),radial-gradient(600px 500px at 50% 120%,#1d4ed422,transparent 60%),var(--bg)}
-h2,h3{margin:0 0 6px}h3{font-size:16px;letter-spacing:-.01em}
-.g{background:linear-gradient(160deg,var(--gl2),var(--gl));border:1px solid var(--ln);border-radius:22px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -24px rgba(0,0,0,.6)}
-.b{position:relative;overflow:hidden;padding:.65em 1.15em;border-radius:12px;border:1px solid var(--ln);background:var(--gl2);color:inherit;font:600 14px Poppins,sans-serif;cursor:pointer;transition:transform .15s,background .2s,border-color .2s}
-.b:hover{transform:translateY(-1px);background:rgba(255,255,255,.1)}.b:active{transform:scale(.97)}
-.b.p{background:linear-gradient(135deg,var(--ac),#1d4ed8);border:0;box-shadow:0 10px 24px -10px var(--ac)}
-.b:disabled{opacity:.4;pointer-events:none}
-.b::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);transform:translateX(-120%);transition:transform .6s}.b:hover::after{transform:translateX(120%)}
-.rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.35);transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}
+h2,h3{margin:0 0 6px}h3{font-size:16px}
+.g{background:linear-gradient(160deg,var(--gl2),var(--gl));border:1px solid var(--ln);border-radius:22px;backdrop-filter:blur(18px);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 20px 40px -24px rgba(0,0,0,.6)}
+.b{position:relative;overflow:hidden;padding:.65em 1.15em;border-radius:12px;border:1px solid var(--ln);background:var(--gl2);color:inherit;font:600 14px Poppins,sans-serif;cursor:pointer;transition:transform .15s,background .2s}
+.b:active{transform:scale(.97)}.b.p{background:linear-gradient(135deg,var(--ac),#1d4ed8);border:0}.b:disabled{opacity:.4;pointer-events:none}
 .big{padding:.85em 1.6em;font-size:16px}
-.in{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:rgba(0,0,0,.32);color:inherit;font:inherit;transition:border-color .2s,box-shadow .2s}
+.in{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:rgba(0,0,0,.32);color:inherit;font:inherit}
 .in:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px rgba(59,130,246,.25)}
-select.in option{background:#0b1430}
 .mu{color:var(--mu)}.s{font-size:12px}.er{color:var(--er);min-height:1.3em;margin:0;font-size:13px}
-
-/* LOGIN */
 .lg{display:grid;grid-template-columns:1.05fr .95fr;min-height:100vh}
-.hr{padding:6vw;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.hr::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(600px 400px at 20% 30%,rgba(59,130,246,.25),transparent 70%)}
-.hr h1{font-size:clamp(36px,5.2vw,68px);line-height:1.02;margin:0 0 16px;font-weight:800;position:relative;letter-spacing:-.02em;background:linear-gradient(180deg,#fff,#9db4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hr p{color:var(--mu);max-width:26em;position:relative;font-size:16px}
-.hr .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);font-size:12px;font-weight:600;color:#93c5fd;margin-bottom:18px;position:relative;width:fit-content}
-.fl i{position:absolute;font-style:normal;font-size:30px;padding:12px;border-radius:16px;background:var(--gl2);border:1px solid var(--ln);animation:fy 7s ease-in-out infinite;opacity:.9}
+.hr{padding:6vw;display:flex;flex-direction:column;justify-content:center;position:relative}
+.hr h1{font-size:clamp(36px,5.2vw,68px);line-height:1.02;margin:0 0 16px;font-weight:800;background:linear-gradient(180deg,#fff,#9db4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hr p{color:var(--mu);max-width:26em;font-size:16px}
 .cw{display:grid;place-items:center;padding:24px}
 .lc{width:min(420px,100%);padding:32px;display:grid;gap:16px;animation:sp .6s cubic-bezier(.2,1.2,.4,1)}
-.lc .av{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;font-size:32px;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 35%,transparent),color-mix(in srgb,var(--ac) 12%,transparent));border:1px solid color-mix(in srgb,var(--ac) 40%,transparent)}
-.lc h2{font-size:22px;letter-spacing:-.01em}
+.lc .av{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;font-size:32px;background:rgba(59,130,246,.2);border:1px solid rgba(59,130,246,.4)}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;border-radius:14px;background:rgba(0,0,0,.32);border:1px solid var(--ln)}
-.seg button{border:0;border-radius:10px;padding:9px 4px;background:none;color:var(--mu);font:600 12px Poppins,sans-serif;cursor:pointer;transition:.25s}
-.seg [aria-pressed=true]{background:linear-gradient(135deg,var(--ac),#1d4ed8);color:#fff;box-shadow:0 6px 16px -6px var(--ac)}
-.lfld{display:grid;gap:6px}
-.lfld label{font-size:12px;font-weight:600;color:var(--mu);letter-spacing:.02em}
-
-/* SHELL */
-.hd{display:flex;align-items:center;gap:10px;padding:10px 14px;margin:12px;position:sticky;top:calc(12px + env(safe-area-inset-top,0px));z-index:20;background:linear-gradient(160deg,rgba(20,32,70,.85),rgba(10,18,41,.85))}
-.lo{font-weight:800;letter-spacing:.02em;white-space:nowrap;font-size:14px;background:linear-gradient(90deg,#fff,#93c5fd);-webkit-background-clip:text;background-clip:text;color:transparent}
-nav{display:flex;gap:6px;flex:1;overflow-x:auto;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
+.seg button{border:0;border-radius:10px;padding:9px 4px;background:none;color:var(--mu);font:600 12px Poppins,sans-serif;cursor:pointer}
+.seg [aria-pressed=true]{background:var(--ac);color:#fff}
+.lfld{display:grid;gap:6px}.lfld label{font-size:12px;font-weight:600;color:var(--mu)}
+.hd{display:flex;align-items:center;gap:10px;padding:10px 14px;margin:12px;position:sticky;top:12px;z-index:20;background:rgba(10,18,41,.9);border:1px solid var(--ln);border-radius:16px}
+.lo{font-weight:800;font-size:14px;color:#fff;white-space:nowrap}
+nav{display:flex;gap:6px;flex:1;overflow-x:auto}nav::-webkit-scrollbar{display:none}
 nav .b{white-space:nowrap;padding:8px 14px}
-nav .b[aria-pressed=true]{background:linear-gradient(135deg,var(--ac),#1d4ed8);border-color:transparent;box-shadow:0 8px 20px -8px var(--ac)}
-.rb{padding:7px 14px;border-radius:99px;background:color-mix(in srgb,var(--ac) 18%,transparent);border:1px solid color-mix(in srgb,var(--ac) 35%,transparent);font-size:13px;font-weight:600;white-space:nowrap}
+nav .b[aria-pressed=true]{background:var(--ac);border-color:transparent;color:#fff}
+.rb{padding:7px 14px;border-radius:99px;background:rgba(59,130,246,.18);border:1px solid rgba(59,130,246,.35);font-size:13px;font-weight:600;white-space:nowrap}
 .pgm{max-width:1180px;margin:0 auto;padding:0 14px 60px}
-.nt{margin:0 0 12px;padding:10px 14px;border-radius:12px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25)}
 .sp{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
-.pad{padding:22px}
-.wc{padding:24px;display:grid;gap:20px}
+.pad{padding:22px}.wc{padding:24px;display:grid;gap:20px}
 .wh{position:relative;width:min(100%,520px);aspect-ratio:1;margin:auto}
 canvas{width:100%;height:100%;display:block}
-.pt{position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:13px solid transparent;border-top:26px solid #fff;border-bottom:0;filter:drop-shadow(0 3px 4px rgba(0,0,0,.5))}
-.ctl,.row{display:flex;gap:8px;flex-wrap:wrap}
-.ctl{justify-content:center}.row{margin:12px 0}
-
-/* STATS */
+.pt{position:absolute;top:-8px;left:50%;transform:translateX(-50%);border:13px solid transparent;border-top:26px solid #fff;border-bottom:0}
+.ctl,.row{display:flex;gap:8px;flex-wrap:wrap}.ctl{justify-content:center}.row{margin:12px 0}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
-.stat{padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--ln);transition:border-color .2s}
-.stat .v{font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.02em}
-.stat .l{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+.stat{padding:14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--ln)}
+.stat .v{font-size:22px;font-weight:800}.stat .l{font-size:11px;color:var(--mu);text-transform:uppercase}
 .stat.a .v{color:var(--ac2)}.stat.g .v{color:var(--ok)}
 .pr{height:10px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden}
-.pr i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#60a5fa);transition:width .6s;box-shadow:0 0 16px rgba(59,130,246,.6)}
-.hi{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);margin:6px 0;font-size:14px;animation:fi .3s;border:1px solid transparent;transition:border-color .2s}
-.hi b{color:var(--ac2)}
-
-/* SISWA / AKUN */
+.pr i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#60a5fa);transition:width .6s}
+.hi{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.035);margin:6px 0;font-size:14px}
 .li{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:6px 0}
-.li .in{flex:1}
-.ls{max-height:50vh;overflow:auto;margin-top:12px;padding-right:4px}
-.fm{display:grid;gap:10px}
-.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.bar .row{margin:0}
+.li .in{flex:1}.ls{max-height:50vh;overflow:auto;margin-top:12px}.fm{display:grid;gap:10px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.bar .row{margin:0}
 .acc{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.03);margin:6px 0;border:1px solid var(--ln)}
-
-/* DENAH */
-.board{margin:14px 0;padding:12px;text-align:center;border-radius:12px;background:linear-gradient(180deg,rgba(59,130,246,.14),rgba(59,130,246,.06));border:1px solid rgba(59,130,246,.25);font-size:12px;letter-spacing:.25em;font-weight:600;color:#93c5fd}
+.board{margin:14px 0;padding:12px;text-align:center;border-radius:12px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);font-size:12px;letter-spacing:.25em;font-weight:600;color:#93c5fd}
 .dn{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.tb{padding:12px;border-radius:16px;border:1px solid var(--ln);background:rgba(255,255,255,.03);transition:transform .25s,border-color .25s;min-width:0}
-.tb:hover{transform:translateY(-4px);border-color:var(--ac)}
-.tb.f{border-color:rgba(59,130,246,.5);background:linear-gradient(160deg,rgba(59,130,246,.18),rgba(255,255,255,.03))}
-.tb.hl{animation:hl 2.4s ease}
-.tb b{font-size:12px;color:var(--mu);letter-spacing:.03em}
-.st{display:flex;align-items:center;gap:8px;margin-top:8px;padding:7px 8px;border-radius:10px;font-size:13px;min-height:38px}
+.tb{padding:12px;border-radius:16px;border:1px solid var(--ln);background:rgba(255,255,255,.03)}
+.tb.f{border-color:rgba(59,130,246,.5);background:rgba(59,130,246,.1)}
+.tb b{font-size:12px;color:var(--mu)}.st{display:flex;align-items:center;gap:8px;margin-top:8px;padding:7px 8px;border-radius:10px;font-size:13px;min-height:38px}
 .st i{font-style:normal;font-weight:700;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11px;flex:none}
 .st span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sa{background:rgba(59,130,246,.15)}.sa i{background:#3b82f6}
 .sb{background:rgba(56,189,248,.12)}.sb i{background:#0ea5e9}
 .st .e{color:var(--mu);font-style:italic}
-
-/* POPUP */
-.ov{position:fixed;inset:0;display:grid;place-items:center;background:rgba(3,6,18,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:50;animation:fi .2s}
-.sh{width:min(420px,92vw);background:linear-gradient(180deg,#17284f,#0b1430);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:30px;text-align:center;animation:sp .55s cubic-bezier(.2,1.3,.4,1);display:grid;gap:10px;box-shadow:0 40px 80px -20px rgba(0,0,0,.7)}
-.sh h2{font-size:28px;line-height:1.15;margin:0;word-break:break-word;letter-spacing:-.01em}
-.sh p{margin:0;color:var(--mu)}
-.em{font-size:48px;animation:bn 2s ease-in-out infinite}
+.ov{position:fixed;inset:0;display:grid;place-items:center;background:rgba(3,6,18,.7);backdrop-filter:blur(10px);z-index:50}
+.sh{width:min(420px,92vw);background:linear-gradient(180deg,#17284f,#0b1430);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:30px;text-align:center;display:grid;gap:10px}
+.sh h2{font-size:28px;margin:0}.sh p{margin:0;color:var(--mu)}.em{font-size:48px}
 .tk{border-top:2px dashed rgba(255,255,255,.12);margin:12px -30px 0;padding-top:14px;color:var(--mu)}
+#toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,16px);background:#eef3ff;color:#05091a;padding:11px 20px;border-radius:99px;font-weight:600;font-size:14px;opacity:0;transition:.25s;z-index:70;pointer-events:none;max-width:92vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@keyframes sp{from{opacity:0;transform:translateY(60px) rotate(-3deg) scale(.9)}}
+@media (max-width:900px){.sp,.lg{grid-template-columns:1fr}.hr{display:none}.lo{display:none}}
+@media (max-width:560px){.dn{gap:6px}.tb{padding:8px}.st{font-size:11px;padding:5px;gap:5px}.pad{padding:14px}.rb{display:none}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="mod"></div><div id="toast" role="status" aria-live="polite"></div>
 
-/* UTIL */
-.sk{border-radius:12px;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%) 0 0/200% 100%,rgba(255,255,255,.05);animation:sh 1.2s linear infinite}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:#eef3ff;color:#05091a;padding:11px 20px;border-radius:99px;font-weight:600;font-size:14px;opacity:0;transition:.25s;z-index:70;pointer-events:none;max-width:92vw;text-align:center;box-shadow:0 20px 40px -12px rgba(0,0,0,.5)}
+<!-- SCRIPT FIREBASE VIA COMPAT (TANPA MODULE, ANTI BLANK) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDQwwgvic_FAefgxi5TDRWsNXzH3ewlQNo",
+  authDomain: "clase-cbd9b.firebaseapp.com",
+  databaseURL: "https://clase-cbd9b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "clase-cbd9b",
+  storageBucket: "clase-cbd9b.firebasestorage.app",
+  messagingSenderId: "475871117428",
+  appId: "1:475871117428:web:41544eb142073be01a1121"
+};
+firebase.initializeApp(firebaseConfig);
+const dbRef = firebase.database().ref('kelas/state');
+
+// --- VARIABEL UTAMA ---
+const $=(s,r=document)=>r.querySelector(s),E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const N=42,RL={user:['Siswa','🎓','#38bdf8'],admin:['Admin','🧑‍🏫','#3b82f6'],dev:['Developer','🛠️','#818cf8']},PG={spin:'🎡 Spin',denah:'🪑 Denah',siswa:'👥 Siswa',akun:'🔐 Akun'};
+const DEV={u:'developer',nm:'Developer',p:'dev123',r:'dev'};
+const norm=d=>({students:d?.students||[],seats:(d?.seats||[]).concat(Array(N).fill('')).slice(0,N),hist:d?.hist||[],akun:d?.akun||[]});
+let S=norm(),me=null,pg='spin',ready=false,busy=false,auto='',ang=0,muted=false,lr='user',regMode=false,askFn=null;
+const sl=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=n=>{const a=new Uint32Array(1),m=Math.floor(2**32/n)*n;do crypto.getRandomValues(a);while(a[0]>=m);return a[0]%n};
+const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const left=()=>{const s=new Set(S.seats);return S.students.filter(n=>!s.has(n))},filled=()=>S.seats.filter(Boolean).length;
+const H=async p=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode('kss:'+p)))].map(x=>x.toString(16).padStart(2,'0')).join('');
+
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2800)}
+function save(){dbRef.set(S).catch(()=>toast('⚠️ Gagal simpan. Cek Firebase Rules.'))}
+
+// --- RENDER UI ---
+function login(){
+  const R=RL[lr],reg=lr==='user'&&regMode;
+  return `<div class="lg" style="--ac:${R[2]}">
+    <div class="hr"><h1>CLASS<br>SEAT SPINNER</h1><p>Acak tempat duduk kelas dengan adil, otomatis, dan seru.</p></div>
+    <div class="cw"><form class="g lc" id="lf" data-mode="${reg?'reg':'login'}">
+      <div class="av">${reg?'📝':R[1]}</div>
+      <div><h2>${reg?'Daftar akun Siswa':'Masuk sebagai '+R[0]}</h2><span class="mu s">Live Sinkronisasi Firebase</span></div>
+      <div class="seg">${Object.entries(RL).map(([k,v])=>`<button type="button" data-a="role" data-r="${k}" aria-pressed="${k===lr}">${v[1]} ${v[0]}</button>`).join('')}</div>
+      ${reg?`<div class="lfld"><label>Nama lengkap</label><input class="in" name="nm" placeholder="Budi Santoso" required></div>`:''}
+      <div class="lfld"><label>Username</label><input class="in" name="u" placeholder="username" required></div>
+      <div class="lfld"><label>Kata sandi</label><input class="in" name="p" type="password" placeholder="••••••" required></div>
+      <p class="er" id="le" role="alert"></p>
+      <button class="b p big">${reg?'Daftar dan masuk':'Masuk ✨'}</button>
+      ${lr==='user' ? reg ? `<button type="button" class="b" data-a="toreg">← Masuk</button>` : `<button type="button" class="b" data-a="toreg">📝 Daftar Siswa</button>` : ''}
+    </form></div>
+  </div>`;
+}
+const hist=n=>S.hist.length?S.hist.slice(0,n).map((h,i)=>`<div class="hi"><b>#${S.hist.length-i}</b> ${E(h.n)} <span class="mu">→ Meja ${(h.i>>1)+1} ${h.i%2?'B':'A'}</span></div>`).join(''):'<p class="mu s">Belum ada hasil spin.</p>';
+
+function pSpin(){
+  const l=left(),f=filled(),full=f>=N,off=busy||auto||full||!l.length?'disabled':'';
+  const ab=!auto?`<button class="b" data-a="as" ${off}>⚡ AUTO SPIN</button>`:auto==='run'?'<button class="b" data-a="ap">⏸ PAUSE</button><button class="b" data-a="ax">⏹ STOP</button>':'<button class="b p" data-a="ar">▶ RESUME</button><button class="b" data-a="ax">⏹ STOP</button>';
+  return `<div class="sp"><section class="g wc"><div class="wh"><canvas id="cv"></canvas><i class="pt"></i></div>
+    <div class="ctl"><button class="b p big" data-a="spin" ${off}>🎯 SPIN NOW</button>${ab}</div></section>
+    <aside class="g pad"><h3>📊 Progres</h3><div class="stats">
+      <div class="stat a"><div class="v">${f}</div><div class="l">Duduk</div></div>
+      <div class="stat"><div class="v">${l.length}</div><div class="l">Belum</div></div>
+      <div class="stat g"><div class="v">${Math.round(f/N*100)}%</div><div class="l">Selesai</div></div></div>
+      <div class="pr"><i style="width:${f/N*100}%"></i></div>
+      <div class="row"><button class="b" data-a="undo" ${busy||auto||!S.hist.length?'disabled':''}>↩️ Undo</button>
+      <button class="b" data-a="shuf" ${busy||auto?'disabled':''}>🔀 Acak</button>
+      <button class="b" data-a="rst" ${busy?'disabled':''}>🗑️ Reset</button></div>
+      <h3>📜 Riwayat</h3>${hist(8)}</aside></div>`;
+}
+function pDen(){
+  const sp=(v,c,l)=>`<div class="st ${c}"><i>${l}</i><span class="${v?'':'e'}">${v?E(v):'Kosong'}</span></div>`;
+  return `<div class="sp"><section class="g pad"><div class="bar"><h3>🪑 Denah kelas</h3>
+    <button class="b p" data-a="cp">📋 Salin</button></div><div class="board">🧑‍🏫 PAPAN TULIS</div>
+    <div class="dn">${Array.from({length:21},(_,k)=>{const a=S.seats[2*k],b=S.seats[2*k+1];return `<div class="tb ${a||b?'f':''}"><b>Meja ${k+1}</b>${sp(a,'sa','A')}${sp(b,'sb','B')}</div>`}).join('')}</div></section>
+    <aside class="g pad"><h3>📜 Hasil spin</h3>${hist(40)}</aside></div>`;
+}
+function pSis(){
+  const s=new Set(S.seats);
+  return `<section class="g pad"><h3>👥 Daftar siswa (${S.students.length})</h3>
+    <textarea id="bulk" class="in" rows="5" placeholder="Budi&#10;Siti&#10;Rian"></textarea>
+    <div class="row"><button class="b p" data-a="addb">➕ Tambah</button><button class="b" data-a="clr">🧹 Hapus</button></div>
+    <div class="ls">${S.students.map((n,i)=>`<div class="li"><input class="in" value="${E(n)}" data-i="${i}" ${s.has(n)?'disabled':''}><span>${s.has(n)?'🔒':`<button class="b" data-a="del" data-i="${i}">🗑️</button>`}</span></div>`).join('')||'<p class="mu">Belum ada nama.</p>'}</div></section>`;
+}
+function pAk(){
+  const dev=me.r==='dev',ops=dev?['user','admin']:['user'];
+  return `<div class="sp"><section class="g pad"><h3>➕ Buat akun</h3>
+    <form id="nf" class="fm"><input class="in" name="nm" placeholder="Nama" required>
+    <input class="in" name="u" placeholder="Username" required>
+    <input class="in" name="p" type="text" placeholder="Password" required>
+    <select class="in" name="r">${ops.map(r=>`<option value="${r}">${RL[r][1]} ${RL[r][0]}</option>`).join('')}</select>
+    <button class="b p">Buat</button></form></section>
+    <section class="g pad"><h3>🔐 Akun</h3>
+    ${dev?`<div class="acc"><span>🛠️ <b>Developer</b> @developer (sistem)</span></div>`:''}
+    ${S.akun.map(a=>`<div class="acc"><span>${RL[a.r][1]} <b>${E(a.nm)}</b> <small class="mu">@${E(a.u)}</small></span>
+    ${(dev&&a.r!=='dev')||(!dev&&a.r==='user')?`<button class="b" data-a="dacc" data-u="${E(a.u)}">Hapus</button>`:''}</div>`).join('')}</section></div>`;
+}
+
+function shell(){
+  const ok=me.r==='user'?['denah']:['spin','denah','siswa','akun'],P={spin:pSpin,denah:pDen,siswa:pSis,akun:pAk};
+  if(!ok.includes(pg))pg=ok[0];
+  return `<div style="--ac:${RL[me.r][2]}"><header class="hd"><b class="lo">🎡 SPINNER</b>
+    <nav>${ok.map(p=>`<button class="b" data-a="tab" data-p="${p}" aria-pressed="${p===pg}">${PG[p]}</button>`).join('')}</nav>
+    <span class="rb">${RL[me.r][1]} ${E(me.nm)}</span><button class="b" data-a="out">Keluar</button></header>
+    <main class="pgm">${P[pg]()}</main></div>`;
+}
+
+function ren(){const a=$('#app');if(!ready){a.innerHTML='<div style="display:grid;place-items:center;height:100vh">Memuat data...</div>';return}a.innerHTML=me?shell():login();if(me&&pg==='spin')drawWheel()}
+
+function drawWheel(){
+  const c=$('#cv');if(!c)return;const w=c.clientWidth,d=devicePixelRatio||1;c.width=c.height=w*d;
+  const x=c.getContext('2d');x.scale(d,d);const r=w/2,l=left(),n=l.length;x.clearRect(0,0,w,w);
+  if(!n){x.fillStyle='#14224d';x.beginPath();x.arc(r,r,r-6,0,7);x.fill();x.fillStyle='#fff';x.textAlign='center';x.font='600 18px Poppins';x.fillText(filled()>=N?'🎉 Selesai':'Tambah nama',r,r);return}
+  const a=2*Math.PI/n,cl=['#1e3a8a','#0f1f4d','#2563eb','#13275f'];
+  l.forEach((nm,i)=>{const s=ang+i*a;x.beginPath();x.moveTo(r,r);x.arc(r,r,r-6,s,s+a);x.fillStyle=cl[i%4];x.fill();x.strokeStyle='rgba(255,255,255,.12)';x.stroke();
+    x.save();x.translate(r,r);x.rotate(s+a/2);x.fillStyle='#fff';x.textAlign='right';x.font=`600 ${Math.max(9,Math.min(16,r*a*.55))}px Poppins`;x.fillText(nm.length>14?nm.slice(0,13)+'…':nm,r-22,5);x.restore()});
+  x.beginPath();x.arc(r,r,r*.13,0,7);x.fillStyle='#05091a';x.fill();x.strokeStyle='#fff';x.lineWidth=3;x.stroke();x.fillStyle='#fff';x.font='700 13px Poppins';x.textAlign='center';x.fillText('SPIN',r,r+5)
+}
+
+function commit(n){const i=S.seats.findIndex(x=>!x);S.seats[i]=n;S.hist.unshift({n,i,t:Date.now()});save()}
+async function spin(){
+  const l=left();if(busy||!l.length||filled()>=N)return;busy=true;ren();
+  const w=rnd(l.length),a=2*Math.PI/l.length,M=2*Math.PI,T=-Math.PI/2-(w+.5)*a,d=(((T-ang)%M)+M)%M+M*(5+rnd(3)),a0=ang,t0=performance.now();
+  await new Promise(r=>{const f=t=>{const p=Math.min(1,(t-t0)/4200);ang=a0+d*(1-Math.pow(1-p,3.4));drawWheel();p<1?requestAnimationFrame(f):r()};requestAnimationFrame(f)});
+  ang%=M;const nm=l[w];commit(nm);busy=false;ren();
+  const i=S.hist[0].i,f=filled();
+  $('#mod').innerHTML=`<div class="ov" data-a="cm"><div class="sh"><div class="em">🎟️</div><small class="mu">HASIL SPIN #${f}</small><h2>${E(nm)}</h2><p>🪑 Meja ${(i>>1)+1} • Kursi ${i%2?'B':'A'}</p><div class="tk"><small>${f} / ${N} siswa sudah duduk</small></div></div></div>`;
+  if(auto)setTimeout(()=>{if($('#mod .sh'))A.cm()},2000);
+}
+async function autoRun(){auto='run';ren();while(auto&&left().length&&filled()<N){while(auto==='pause')await sl(200);if(!auto)break;await spin();if(!auto)break;for(let t=0;t<2500&&auto;){await sl(100);if(auto!=='pause')t+=100}}auto='';ren()}
+const txt=()=>'🪑 DENAH TEMPAT DUDUK KELAS\n'+Array.from({length:21},(_,k)=>`📍 Meja ${k+1} : ${S.seats[2*k]||'—'} & ${S.seats[2*k+1]||'—'}`).join('\n');
+
+async function doLogin(f){
+  const d=new FormData(f),u=(d.get('u')||'').trim().toLowerCase(),p=d.get('p')||'',er=m=>{$('#le').textContent=m},reg=f.dataset.mode==='reg';
+  if(!reg&&lr==='dev'){if(u!==DEV.u||p!==DEV.p)return er('Sandi Dev salah.');me={u:DEV.u,nm:DEV.nm,r:'dev'};pg='spin';ren();return}
+  if(reg){if(lr!=='user')return er('Hanya Siswa bisa daftar.');const nm=(d.get('nm')||'').trim();if(!nm)return er('Nama wajib diisi.');if(p.length<4)return er('Sandi min 4.');if(u===DEV.u||S.akun.some(a=>a.u===u))return er('Username dipakai.');const acc={u,nm,h:await H(p),r:'user'};S.akun.push(acc);save();regMode=false;me=acc;pg='denah';ren();return}
+  const a=S.akun.find(x=>x.u===u);if(!a||a.h!==await H(p))return er('Username/Sandi salah.');if(a.r!==lr)return er('Bukan role '+RL[lr][0]);me=a;pg=a.r==='user'?'denah':'spin';ren();
+}
+async function mkAcc(f){
+  const d=new FormData(f),u=d.get('u').trim().toLowerCase(),nm=d.get('nm').trim(),p=d.get('p'),r=d.get('r');
+  if(r==='admin'&&me.r!=='dev')return;if(!nm||!u||p.length<4)return toast('Data tidak valid');if(u===DEV.u||S.akun.some(a=>a.u===u))return toast('Username dipakai');
+  S.akun.push({u,nm,h:await H(p),r});save();ren();toast('✅ Akun dibuat');
+}
+
+const A={
+  role:b=>{lr=b.dataset.r;regMode=false;ren()},toreg:()=>{regMode=!regMode;ren()},tab:b=>{pg=b.dataset.p;ren()},
+  out:()=>{me=null;regMode=false;ren()},cm:()=>{$('#mod').innerHTML=''},spin:()=>spin(),
+  as:()=>{if(left().length&&filled()<N)autoRun()},ap:()=>{auto='pause';ren()},ar:()=>{auto='run';ren()},ax:()=>{auto='';ren()},
+  undo:()=>{if(busy||auto||!S.hist.length)return;const h=S.hist.shift();S.seats[h.i]='';save();ren()},
+  shuf:()=>{S.students=shuf([...S.students]);save();ren()},rst:()=>{if(!busy){S.seats=Array(N).fill('');S.hist=[];save();ren()}},
+  addb:()=>{const t=$('#bulk').value.split(/\r?\nsition:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:#eef3ff;color:#05091a;padding:11px 20px;border-radius:99px;font-weight:600;font-size:14px;opacity:0;transition:.25s;z-index:70;pointer-events:none;max-width:92vw;text-align:center;box-shadow:0 20px 40px -12px rgba(0,0,0,.5)}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 
 @keyframes rp{to{transform:scale(4);opacity:0}}
