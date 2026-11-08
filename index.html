@@ -3,100 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class Seat Spinner — LocalStorage</title>
+<title>Class Seat Spinner — Premium</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f8fafc;--surface:#fff;--border:#e2e8f0;--text:#0f172a;--text-muted:#64748b;--primary:#3b82f6;--primary-light:#eff6ff;--shadow-lg:0 10px 25px -5px rgba(0,0,0,.05)}
+:root{--bg:#0f172a;--surface:rgba(255,255,255,.03);--surface-hover:rgba(255,255,255,.08);--border:rgba(255,255,255,.1);--text:#f8fafc;--text-muted:#94a3b8;--primary:#8b5cf6;--primary-hover:#7c3aed;--primary-light:rgba(139,92,246,.15);--shadow-lg:0 10px 30px rgba(0,0,0,.3)}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-h1,h2,h3{font-family:'Poppins',sans-serif;font-weight:700;color:#0f172a}
+body{background:#0f172a;background-image:radial-gradient(circle at 15% 50%,rgba(139,92,246,.15),transparent 25%),radial-gradient(circle at 85% 30%,rgba(6,182,212,.1),transparent 25%);background-attachment:fixed;color:var(--text);min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Poppins',sans-serif;font-weight:700;color:#fff}
 .hidden{display:none!important}.flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.text-muted{color:var(--text-muted)}
-.btn{padding:12px 20px;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:all .2s;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn:active{transform:scale(.97)}.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:#2563eb}.btn-outline{background:var(--surface);border:1px solid var(--border);color:var(--text)}.btn-danger{background:#fef2f2;color:#ef4444;border:1px solid #fecaca}
 
-/* LOGIN */
-#login-view{display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f1f5f9}
-.login-wrapper{display:flex;width:100%;max-width:900px;height:550px;background:var(--surface);border-radius:30px;overflow:hidden;box-shadow:var(--shadow-lg);margin:20px}
-.login-left{flex:1;background:linear-gradient(135deg,#4f46e5,#0ea5e9);padding:40px;display:flex;flex-direction:column;justify-content:center;color:#fff}
-.login-left h1{color:#fff;font-size:32px;margin-bottom:16px}.login-left p{font-size:16px;opacity:.9}
-.login-right{flex:1;padding:50px;display:flex;flex-direction:column;justify-content:center}
-@media(max-width:768px){.login-wrapper{flex-direction:column;height:auto}.login-left{padding:30px;text-align:center}.login-right{padding:30px}}
+/* BUTTONS */
+.btn{padding:12px 20px;border-radius:14px;border:1px solid transparent;font-weight:600;cursor:pointer;transition:all .3s ease;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;backdrop-filter:blur(10px)}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.4)}.btn-primary:hover{background:var(--primary-hover);transform:translateY(-2px)}
+.btn-outline{background:var(--surface);border:1px solid var(--border);color:var(--text)}.btn-outline:hover{background:var(--surface-hover);border-color:rgba(255,255,255,.2)}
+.btn-danger{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}.btn-danger:hover{background:rgba(239,68,68,.2)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* LOGIN (Premium Glassmorphism) */
+#login-view{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-wrapper{display:flex;width:100%;max-width:900px;min-height:520px;background:var(--surface);border:1px solid var(--border);border-radius:32px;overflow:hidden;box-shadow:var(--shadow-lg);backdrop-filter:blur(20px)}
+.login-left{flex:1.2;background:linear-gradient(135deg,rgba(139,92,246,.2),rgba(6,182,212,.05));padding:50px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);position:relative;overflow:hidden}
+.login-left::before{content:'';position:absolute;width:300px;height:300px;background:var(--primary);filter:blur(100px);top:-50px;left:-50px;opacity:.5}
+.login-left h1{color:#fff;font-size:38px;margin-bottom:16px;position:relative;z-index:1;line-height:1.2}.login-left p{font-size:16px;color:var(--text-muted);position:relative;z-index:1}
+.login-right{flex:1;padding:50px;display:flex;flex-direction:column;justify-content:center;background:rgba(15,23,42,.6)}
+@media(max-width:768px){.login-wrapper{flex-direction:column;min-height:auto}.login-left{padding:40px 30px;text-align:center}.login-right{padding:40px 30px}}
 .input-group{text-align:left;margin-bottom:20px;position:relative}
-.input-group label{display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px}
-.input-field{width:100%;padding:14px 16px 14px 44px;background:var(--bg);border:1px solid var(--border);border-radius:12px;font-size:15px;outline:none}
-.input-icon{position:absolute;left:14px;top:40px;font-size:18px;color:var(--text-muted)}
+.input-group label{display:block;font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:8px;margin-left:4px}
+.input-field{width:100%;padding:16px 16px 16px 48px;background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:16px;font-size:15px;color:#fff;outline:none;transition:all .3s}
+.input-field:focus{border-color:var(--primary);background:rgba(0,0,0,.4);box-shadow:0 0 0 4px var(--primary-light)}
+.input-icon{position:absolute;left:16px;top:42px;font-size:18px;color:var(--text-muted)}
 
-/* APP NAV */
-.navbar{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100}
+/* NAVBAR */
+.navbar{background:rgba(15,23,42,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
-.logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:10px}
-.logo span{background:var(--primary);color:#fff;padding:4px 8px;border-radius:8px;font-size:12px}
-.nav-links{display:flex;gap:6px;overflow-x:auto}
-.nav-link{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-muted);white-space:nowrap}
+.logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:20px;display:flex;align-items:center;gap:10px;color:#fff}
+.logo span{background:var(--primary);color:#fff;padding:4px 10px;border-radius:8px;font-size:12px;letter-spacing:1px}
+.nav-links{display:flex;gap:8px;overflow-x:auto;padding:4px;background:rgba(0,0,0,.2);border-radius:12px;border:1px solid var(--border)}
+.nav-link{padding:8px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-muted);white-space:nowrap;transition:all .2s}
 .nav-link.active{background:var(--primary-light);color:var(--primary)}
+.nav-link:hover:not(.active){color:#fff}
 
 /* VIEWS */
-.view{display:none;padding:30px 0;animation:fadeIn .3s ease}
+.view{display:none;padding:40px 0;animation:fadeIn .4s ease-out}
 .view.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* SPIN */
-.spin-container{display:flex;flex-direction:column;align-items:center;gap:24px}
-.wheel-wrapper{position:relative;width:100%;max-width:350px;aspect-ratio:1/1}
-.wheel-canvas{width:100%;height:100%;border-radius:50%;box-shadow:var(--shadow-lg);transition:transform 4s cubic-bezier(.17,.67,.12,.99);background:var(--surface)}
-.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;background:var(--surface);border:4px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;font-size:20px}
-.wheel-pointer{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:25px solid #f59e0b;z-index:20}
-.progress-card{background:var(--surface);padding:20px;border-radius:16px;width:100%;max-width:450px;text-align:center;border:1px solid var(--border)}
-.progress-bar-bg{width:100%;height:8px;background:var(--bg);border-radius:4px;overflow:hidden;margin-top:10px}
-.progress-bar-fill{height:100%;background:var(--primary);width:0%;transition:width .4s ease}
-.action-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%;max-width:450px}
-.action-buttons .btn{flex:1;min-width:130px}
+.spin-container{display:flex;flex-direction:column;align-items:center;gap:30px}
+.wheel-wrapper{position:relative;width:100%;max-width:380px;aspect-ratio:1/1}
+.wheel-canvas{width:100%;height:100%;border-radius:50%;box-shadow:0 0 40px rgba(139,92,246,.2);transition:transform 4s cubic-bezier(.17,.67,.12,.99);background:var(--surface)}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:var(--bg);border:4px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;font-size:24px;box-shadow:0 0 20px rgba(0,0,0,.5)}
+.wheel-pointer{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:30px solid var(--primary);filter:drop-shadow(0 4px 6px rgba(139,92,246,.5));z-index:20}
+.progress-card{background:var(--surface);border:1px solid var(--border);backdrop-filter:blur(10px);padding:24px;border-radius:20px;width:100%;max-width:500px;text-align:center}
+.progress-bar-bg{width:100%;height:10px;background:rgba(0,0,0,.4);border-radius:5px;overflow:hidden;margin-top:12px}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--primary),#06b6d4);width:0%;transition:width .4s ease}
+.action-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;width:100%;max-width:500px}
+.action-buttons .btn{flex:1;min-width:140px;padding:16px}
 
 /* DENAH */
-.classroom-container{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:30px 15px;margin-top:20px}
-.whiteboard{background:#f1f5f9;color:#94a3b8;text-align:center;padding:16px;border-radius:12px;font-weight:700;max-width:400px;margin:0 auto 30px auto;border:2px dashed #cbd5e1}
-.desk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:800px;margin:0 auto}
-@media(max-width:600px){.desk-grid{gap:6px}}
-.desk-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
-.desk-card.filled{background:#f0fdf4;border-color:#bbf7d0}
-.desk-header{display:flex;justify-content:space-between;font-size:10px;font-weight:700;color:var(--text-muted);margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:6px}
-.desk-card.filled .desk-header{color:#166534;border-color:#dcfce7}
-.seat-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.seat-label{width:18px;height:18px;background:var(--bg);border-radius:4px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700}
-.seat-name{flex:1;font-size:12px;font-weight:600;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.seat-name.filled-text{color:#0f172a}
+.classroom-container{background:var(--surface);border:1px solid var(--border);backdrop-filter:blur(10px);border-radius:28px;padding:40px 20px;margin-top:20px}
+.whiteboard{background:rgba(0,0,0,.3);color:var(--text-muted);text-align:center;padding:20px;border-radius:16px;font-weight:700;max-width:400px;margin:0 auto 40px auto;border:2px dashed var(--border);letter-spacing:2px}
+.desk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:850px;margin:0 auto}
+@media(max-width:600px){.desk-grid{gap:8px;padding:0 10px}}
+.desk-card{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:16px;padding:16px;transition:all .3s}
+.desk-card.filled{background:rgba(16,185,129,.05);border-color:rgba(16,185,129,.3);box-shadow:0 0 15px rgba(16,185,129,.05)}
+.desk-header{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--text-muted);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px;letter-spacing:.5px}
+.desk-card.filled .desk-header{color:#10b981;border-color:rgba(16,185,129,.2)}
+.seat-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.seat-label{width:22px;height:22px;background:rgba(0,0,0,.3);border-radius:6px;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text-muted)}
+.seat-name{flex:1;font-size:13px;font-weight:600;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seat-name.filled-text{color:#fff}
 
 /* TABLE */
-.table-container{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:20px}
+.table-container{background:var(--surface);border:1px solid var(--border);backdrop-filter:blur(10px);border-radius:20px;overflow:hidden;margin-top:20px}
 table{width:100%;border-collapse:collapse;text-align:left}
-th,td{padding:16px;border-bottom:1px solid var(--border);font-size:14px}
-th{background:var(--bg);font-weight:600;color:var(--text-muted);font-size:12px}
-.role-badge{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
-.role-dev{background:#f3e8ff;color:#7e22ce}.role-admin{background:#e0f2fe;color:#0369a1}.role-user{background:#f1f5f9;color:#475569}
+th,td{padding:18px 24px;border-bottom:1px solid var(--border);font-size:14px}
+th{background:rgba(0,0,0,.2);font-weight:600;color:var(--text-muted);font-size:12px;text-transform:uppercase;letter-spacing:1px}
+.role-badge{padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.role-dev{background:rgba(139,92,246,.15);color:#c4b5fd;border:1px solid rgba(139,92,246,.3)}
+.role-admin{background:rgba(14,165,233,.15);color:#7dd3fc;border:1px solid rgba(14,165,233,.3)}
+.role-user{background:rgba(255,255,255,.1);color:#cbd5e1;border:1px solid rgba(255,255,255,.2)}
+
+/* LIST */
+textarea{width:100%;height:300px;padding:20px;border-radius:20px;border:1px solid var(--border);background:rgba(0,0,0,.2);color:#fff;font-size:15px;outline:none;transition:all .3s;resize:vertical}
+textarea:focus{border-color:var(--primary);background:rgba(0,0,0,.4);box-shadow:0 0 0 4px var(--primary-light)}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.3);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-overlay.show{opacity:1;pointer-events:auto}
-.modal-content{background:var(--surface);padding:32px;border-radius:28px;text-align:center;transform:scale(.8);transition:transform .5s cubic-bezier(.34,1.56,.64,1);max-width:90%;width:380px}
+.modal-content{background:#1e293b;border:1px solid var(--border);padding:40px 32px;border-radius:32px;text-align:center;transform:scale(.8);transition:transform .5s cubic-bezier(.34,1.56,.64,1);max-width:90%;width:400px;box-shadow:0 25px 50px rgba(0,0,0,.5)}
 .modal-overlay.show .modal-content{transform:scale(1)}
-.modal-input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;margin-bottom:12px;font-size:14px;background:var(--bg);outline:none}
-.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:#0f172a;color:#fff;padding:12px 24px;border-radius:8px;opacity:0;transition:all .3s;z-index:2000}
+.modal-input{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:12px;margin-bottom:16px;font-size:14px;background:rgba(0,0,0,.2);color:#fff;outline:none}
+.modal-input:focus{border-color:var(--primary)}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--primary);color:#fff;padding:14px 28px;border-radius:50px;font-weight:600;box-shadow:0 10px 30px rgba(139,92,246,.4);opacity:0;transition:all .3s;z-index:2000;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
-<!-- TOAST & LOGIN -->
 <div class="toast" id="toast">Pesan</div>
 
+<!-- LOGIN -->
 <div id="login-view">
   <div class="login-wrapper">
-    <div class="login-left"><h1>Atur Posisi Duduk Jadi Lebih Seru.</h1><p>Sistem pengacakan tempat duduk kelas modern.</p></div>
+    <div class="login-left">
+      <h1>Atur Posisi Duduk Jadi Lebih Seru.</h1>
+      <p>Sistem pengacakan tempat duduk kelas modern dengan visual interaktif dan transparan.</p>
+    </div>
     <div class="login-right">
-      <h2 style="margin-bottom:20px;">Selamat Datang</h2>
-      <div class="input-group"><label>Username</label><span class="input-icon">👤</span><input type="text" id="login-user" class="input-field" placeholder="Username"></div>
+      <h2 style="margin-bottom:30px;font-size:24px;">Selamat Datang 👋</h2>
+      <div class="input-group"><label>Username</label><span class="input-icon">👤</span><input type="text" id="login-user" class="input-field" placeholder="Masukkan username"></div>
       <div class="input-group"><label>Password</label><span class="input-icon">🔒</span><input type="password" id="login-pass" class="input-field" placeholder="••••••"></div>
-      <button class="btn btn-primary" id="btn-login" style="width:100%;padding:16px;" onclick="doLogin()">Masuk ke Sistem</button>
+      <button class="btn btn-primary" id="btn-login" style="width:100%;padding:18px;margin-top:10px;font-size:16px;" onclick="doLogin()">Masuk ke Sistem</button>
     </div>
   </div>
 </div>
@@ -106,23 +125,162 @@ th{background:var(--bg);font-weight:600;color:var(--text-muted);font-size:12px}
   <nav class="navbar"><div class="container flex justify-between items-center">
     <div class="logo" id="logo-brand"><span>CS</span> Class Spinner</div>
     <div class="nav-links" id="nav-links"></div>
-    <button class="btn btn-danger" onclick="doLogout()" style="padding:8px 16px;margin-left:10px;">Logout</button>
+    <button class="btn btn-danger" onclick="doLogout()" style="padding:8px 16px;margin-left:15px;border-radius:10px;">Logout</button>
   </div></nav>
+  
   <div class="container">
+    <!-- SPIN -->
     <div class="view" id="view-spin">
       <div class="spin-container">
         <div class="wheel-wrapper"><div class="wheel-pointer"></div><canvas id="wheel-canvas" class="wheel-canvas" width="600" height="600"></canvas><div class="wheel-center">🎯</div></div>
-        <div class="progress-card"><div id="progress-text" style="font-weight:700;">0 / 42 Kursi Terisi</div><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div></div>
-        <div class="action-buttons"><button class="btn btn-primary" id="btn-spin" onclick="manualSpin()" style="flex:2;">SPIN NOW</button><button class="btn btn-outline" onclick="resetAll()">RESET</button></div>
+        <div class="progress-card"><div id="progress-text" style="font-weight:700;font-size:16px;">0 / 42 Kursi Terisi</div><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div></div>
+        <div class="action-buttons">
+          <button class="btn btn-primary" id="btn-spin" onclick="manualSpin()" style="flex:2;">SPIN NOW</button>
+          <button class="btn btn-outline" id="btn-auto" onclick="toggleAutoSpin()">AUTO SPIN</button>
+        </div>
+        <div class="action-buttons">
+          <button class="btn btn-outline" id="btn-undo" onclick="undoSpin()">UNDO</button>
+          <button class="btn btn-danger" onclick="resetAll()">RESET</button>
+        </div>
       </div>
     </div>
+    
+    <!-- DENAH -->
     <div class="view" id="view-plan">
       <div class="flex justify-between items-center" style="margin-bottom:10px;">
         <h2>Denah Kelas</h2><button class="btn btn-outline" onclick="copyRekap()">📋 Copy Rekap</button>
       </div>
       <div class="classroom-container"><div class="whiteboard">PAPAN TULIS (DEPAN)</div><div class="desk-grid" id="desk-grid"></div></div>
     </div>
+    
+    <!-- LIST -->
     <div class="view" id="view-list" style="max-width:700px;margin:0 auto;">
+      <h2 style="margin-bottom:20px;">Daftar Nama Murid</h2>
+      <textarea id="input-names" placeholder="Ketik nama, pisahkan dengan ENTER..."></textarea>
+      <div style="margin-top:20px;text-align:right;"><button class="btn btn-primary" onclick="saveNames()" style="padding:16px 32px;">💾 SIMPAN DAFTAR</button></div>
+    </div>
+    
+    <!-- MANAGE -->
+    <div class="view" id="view-manage-users">
+      <div class="flex justify-between items-center" style="margin-bottom:20px;">
+        <h2>Kelola Pengguna</h2><button class="btn btn-primary" onclick="openUserModal()">➕ Buat Akun</button>
+      </div>
+      <div class="table-container"><table><thead><tr><th>Username</th><th>Role</th><th>Aksi</th></tr></thead><tbody id="user-table-body"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="popup-spin">
+  <div class="modal-content"><div style="font-size:50px;margin-bottom:15px;animation:bounce 1s infinite;">🎉</div><h3 id="popup-name" style="color:var(--primary);font-size:28px;">Nama</h3><p id="popup-seat" style="margin-bottom:25px;color:var(--text-muted);font-size:16px;">Meja 1 - Kursi A</p><button class="btn btn-primary" style="width:100%;padding:16px;" onclick="closePopup('popup-spin')">Tutup & Lanjut</button></div>
+</div>
+<div class="modal-overlay" id="popup-user">
+  <div class="modal-content">
+    <h3 style="margin-bottom:20px;">Buat Akun Baru</h3>
+    <input type="text" id="new-user-name" class="modal-input" placeholder="Username">
+    <input type="text" id="new-user-pass" class="modal-input" placeholder="Password">
+    <select id="new-user-role" class="modal-input"><option value="user">User (Hanya lihat)</option><option value="admin">Admin (Bisa spin)</option></select>
+    <div style="display:flex;gap:12px;margin-top:20px;"><button class="btn btn-outline" style="flex:1;" onclick="closePopup('popup-user')">Batal</button><button class="btn btn-primary" style="flex:1;" onclick="saveNewUser()">Simpan</button></div>
+  </div>
+</div>
+
+<style>@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}</style>
+
+<!-- LOGIKA JAVASCRIPT -->
+<script>
+  const TOTAL_CAPACITY = 42;
+  let currentUser = null;
+  let state = { allNames: [], available: [], seated: [], isSpinning: false, currentAngle: 0, autoSpinState: 'idle', autoSpinTimer: null };
+  let usersDB = [];
+
+  // LOAD DATA
+  function initData() {
+    let savedUsers = localStorage.getItem('seatSpinner_users');
+    if(savedUsers) {
+      usersDB = JSON.parse(savedUsers);
+    } else {
+      usersDB = [
+        { username: "developer", pass: "dev123", role: "developer" },
+        { username: "admin", pass: "admin123", role: "admin" },
+        { username: "user", pass: "user123", role: "user" }
+      ];
+      localStorage.setItem('seatSpinner_users', JSON.stringify(usersDB));
+    }
+
+    let savedData = localStorage.getItem('seatSpinner_data');
+    if(savedData) {
+      const p = JSON.parse(savedData);
+      state.allNames = p.allNames || [];
+      state.available = p.available || [];
+      state.seated = p.seated || [];
+    } else {
+      state.allNames = Array.from({length: 42}, (_, i) => `Siswa ${i + 1}`);
+      state.available = [...state.allNames]; shuffleArray(state.available); state.seated = [];
+      saveData();
+    }
+  }
+
+  function saveData() { localStorage.setItem('seatSpinner_data', JSON.stringify({ allNames: state.allNames, available: state.available, seated: state.seated })); }
+  function saveUsersDB() { localStorage.setItem('seatSpinner_users', JSON.stringify(usersDB)); }
+  function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } }
+
+  // AUTH
+  function doLogin() {
+    const btn = document.getElementById('btn-login');
+    const u = document.getElementById('login-user').value.trim();
+    const p = document.getElementById('login-pass').value.trim();
+    if(!u || !p) return showToast('Isi username dan password!', 'error');
+    
+    btn.innerText = 'Memproses...'; btn.disabled = true;
+    setTimeout(() => {
+      const user = usersDB.find(x => x.username === u && x.pass === p);
+      if (user) { currentUser = user; setupUIForRole(); } 
+      else { showToast('Username atau password salah!', 'error'); }
+      btn.innerText = 'Masuk ke Sistem'; btn.disabled = false;
+    }, 500);
+  }
+
+  function doLogout() { 
+    if(!confirm('Yakin mau logout?')) return;
+    currentUser = null; 
+    document.getElementById('login-view').classList.remove('hidden'); 
+    document.getElementById('app-view').classList.add('hidden'); 
+    document.getElementById('login-user').value = '';
+    document.getElementById('login-pass').value = '';
+    stopAutoSpin();
+  }
+
+  function setupUIForRole() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('app-view').classList.remove('hidden');
+    const role = currentUser.role, nav = document.getElementById('nav-links'), logo = document.getElementById('logo-brand');
+    
+    if (role === 'developer') {
+      document.documentElement.style.setProperty('--primary', '#8b5cf6');
+      logo.innerHTML = `<span style="background:#8b5cf6">DEV</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link" id="nav-spin" onclick="switchTab('spin')">Spin</div><div class="nav-link" id="nav-plan" onclick="switchTab('plan')">Denah</div><div class="nav-link" id="nav-list" onclick="switchTab('list')">Murid</div><div class="nav-link active" id="nav-manage-users" onclick="switchTab('manage-users')">Kelola Akun</div>`;
+      switchTab('manage-users');
+    } else if (role === 'admin') {
+      document.documentElement.style.setProperty('--primary', '#0ea5e9');
+      logo.innerHTML = `<span style="background:#0ea5e9">ADM</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link active" id="nav-spin" onclick="switchTab('spin')">Spin</div><div class="nav-link" id="nav-plan" onclick="switchTab('plan')">Denah</div><div class="nav-link" id="nav-list" onclick="switchTab('list')">Murid</div>`;
+      switchTab('spin');
+    } else {
+      document.documentElement.style.setProperty('--primary', '#10b981');
+      logo.innerHTML = `<span style="background:#10b981">USR</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link active" id="nav-plan" onclick="switchTab('plan')">Denah Kelas</div>`;
+      switchTab('plan');
+    }
+    updateUI();
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    document.getElementById(`view-${tab}`).classList.add('active');
+    const n = document.getElementById(`nav-${tab}`); if(n) n.classList.add('active');
+    
+    if (tab === 'plan0px;margin:0 auto;">
       <h2 style="margin-bottom:15px;">Daftar Nama Murid</h2>
       <textarea id="input-names" style="width:100%;height:250px;padding:16px;border-radius:12px;border:1px solid var(--border);outline:none;"></textarea>
       <div style="margin-top:15px;text-align:right;"><button class="btn btn-primary" onclick="saveNames()">💾 SIMPAN DAFTAR</button></div>
