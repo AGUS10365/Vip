@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class Seat Spinner — Firebase Fixed</title>
+<title>Class Seat Spinner — Firebase</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #f8fafc; --surface: #ffffff; --border: #e2e8f0; --text: #0f172a; --text-muted: #64748b;
     --primary: #3b82f6; --primary-hover: #2563eb; --primary-light: #eff6ff;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.05); --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
-    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05); --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
   body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
@@ -22,6 +22,12 @@
   .btn:active { transform: scale(0.97); } .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
   .btn-primary:hover { background: var(--primary-hover); } .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
   .btn-outline:hover { background: var(--bg); } .btn-danger { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
+  .btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+  /* LOADING SCREEN */
+  #loading-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .spinner { width: 40px; height: 40px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* LOGIN */
   #login-view { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #f1f5f9; }
@@ -97,17 +103,24 @@
 </head>
 <body>
 
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="spinner"></div>
+  <h3>Menghubungkan ke Database...</h3>
+  <p class="text-muted" style="margin-top:8px; font-size:14px;">Mohon tunggu sebentar</p>
+</div>
+
 <div class="toast" id="toast">Pesan</div>
 
 <!-- LOGIN -->
-<div id="login-view">
+<div id="login-view" class="hidden">
   <div class="login-wrapper">
     <div class="login-left"><h1>Atur Posisi Duduk Jadi Lebih Seru.</h1><p>Sistem pengacakan tempat duduk kelas modern.</p></div>
     <div class="login-right">
       <h2 style="margin-bottom:20px;">Selamat Datang</h2>
       <div class="input-group"><label>Username</label><span class="input-icon">👤</span><input type="text" id="login-user" class="input-field" placeholder="Username"></div>
       <div class="input-group"><label>Password</label><span class="input-icon">🔒</span><input type="password" id="login-pass" class="input-field" placeholder="••••••"></div>
-      <button class="btn btn-primary" style="width: 100%; padding: 16px;" onclick="doLogin()">Masuk ke Sistem</button>
+      <button class="btn btn-primary" id="btn-login" style="width: 100%; padding: 16px;" onclick="doLogin()">Masuk ke Sistem</button>
     </div>
   </div>
 </div>
@@ -117,6 +130,184 @@
   <nav class="navbar"><div class="container flex justify-between items-center">
     <div class="logo" id="logo-brand"><span>CS</span> Class Spinner</div>
     <div class="nav-links" id="nav-links"></div>
+    <button class="btn btn-danger" onclick="doLogout()" style="padding: 8px 16px; margin-left: 10px;">Logout</button>
+  </div></nav>
+
+  <div class="container">
+    <div class="view" id="view-spin">
+      <div class="spin-container">
+        <div class="wheel-wrapper"><div class="wheel-pointer"></div><canvas id="wheel-canvas" class="wheel-canvas" width="600" height="600"></canvas><div class="wheel-center">🎯</div></div>
+        <div class="progress-card"><div id="progress-text" style="font-weight:700;">0 / 42 Kursi Terisi</div><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div></div>
+        <div class="action-buttons"><button class="btn btn-primary" id="btn-spin" onclick="manualSpin()" style="flex: 2;">SPIN NOW</button><button class="btn btn-outline" onclick="resetAll()">RESET</button></div>
+      </div>
+    </div>
+
+    <div class="view" id="view-plan">
+      <div class="flex justify-between items-center" style="margin-bottom: 10px;">
+        <h2>Denah Kelas</h2>
+        <button class="btn btn-outline" onclick="copyRekap()">📋 Copy Rekap</button>
+      </div>
+      <div class="classroom-container"><div class="whiteboard">PAPAN TULIS (DEPAN)</div><div class="desk-grid" id="desk-grid"></div></div>
+    </div>
+
+    <div class="view" id="view-list" style="max-width: 700px; margin: 0 auto;">
+      <h2 style="margin-bottom:15px;">Daftar Nama Murid</h2>
+      <textarea id="input-names" style="width: 100%; height: 250px; padding: 16px; border-radius: 12px; border: 1px solid var(--border); outline:none;"></textarea>
+      <div style="margin-top: 15px; text-align: right;"><button class="btn btn-primary" onclick="saveNames()">💾 SIMPAN DAFTAR</button></div>
+    </div>
+
+    <div class="view" id="view-manage-users">
+      <div class="flex justify-between items-center" style="margin-bottom: 20px;">
+        <h2>Kelola Pengguna</h2><button class="btn btn-primary" onclick="openUserModal()">➕ Buat Akun Baru</button>
+      </div>
+      <div class="table-container"><table><thead><tr><th>Username</th><th>Role</th><th>Aksi</th></tr></thead><tbody id="user-table-body"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="popup-spin">
+  <div class="modal-content"><div style="font-size:40px; margin-bottom:10px;">🎉</div><h3 id="popup-name" style="color:var(--primary);">Nama</h3><p id="popup-seat" style="margin-bottom:20px;">Meja 1 - Kursi A</p><button class="btn btn-primary" style="width:100%;" onclick="closePopup('popup-spin')">Tutup & Lanjut</button></div>
+</div>
+
+<div class="modal-overlay" id="popup-user">
+  <div class="modal-content">
+    <h3 style="margin-bottom:15px;">Buat Akun Baru</h3>
+    <input type="text" id="new-user-name" class="modal-input" placeholder="Username">
+    <input type="text" id="new-user-pass" class="modal-input" placeholder="Password">
+    <select id="new-user-role" class="modal-input"><option value="user">User</option><option value="admin">Admin</option></select>
+    <div style="display: flex; gap: 10px; margin-top: 20px;"><button class="btn btn-outline" style="flex:1;" onclick="closePopup('popup-user')">Batal</button><button class="btn btn-primary" style="flex:1;" onclick="saveNewUser()">Simpan</button></div>
+  </div>
+</div>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQwwgvic_FAefgxi5TDRWsNXzH3ewlQNo",
+    authDomain: "clase-cbd9b.firebaseapp.com",
+    projectId: "clase-cbd9b",
+    storageBucket: "clase-cbd9b.firebasestorage.app",
+    messagingSenderId: "475871117428",
+    appId: "1:475871117428:web:41544eb142073be01a1121",
+    measurementId: "G-N98X5H2MG8"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Expose ke global window
+  window.fb = { db, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, where };
+  
+  // Panggil fungsi init setelah firebase siap
+  if (typeof window.startApp === 'function') {
+      window.startApp();
+  }
+</script>
+
+<!-- APP LOGIC -->
+<script>
+  const TOTAL_DESKS = 21, TOTAL_CAPACITY = 42;
+  let currentUser = null, db, fbCol, fbDoc, fbGetDoc, fbGetDocs, fbSetDoc, fbDeleteDoc, fbQuery, fbWhere;
+  let state = { allNames: [], available: [], seated: [], isSpinning: false, currentAngle: 0 };
+
+  // Fungsi ini dipanggil oleh Firebase SDK di atas
+  window.startApp = async () => {
+    // Ambil referensi fungsi Firebase
+    const f = window.fb;
+    db = f.db; fbCol = f.collection; fbDoc = f.doc; fbGetDoc = f.getDoc; fbGetDocs = f.getDocs; fbSetDoc = f.setDoc; fbDeleteDoc = f.deleteDoc; fbQuery = f.query; fbWhere = f.where;
+    
+    try {
+      // 1. Cek/Buat User Default
+      const usersSnap = await fbGetDocs(fbCol(db, "users"));
+      if (usersSnap.empty) {
+        await fbSetDoc(fbDoc(db, "users", "developer"), { username: "developer", pass: "dev123", role: "developer" });
+        await fbSetDoc(fbDoc(db, "users", "admin"), { username: "admin", pass: "admin123", role: "admin" });
+        await fbSetDoc(fbDoc(db, "users", "user"), { username: "user", pass: "user123", role: "user" });
+      }
+
+      // 2. Load Data Spinner
+      const dataSnap = await fbGetDoc(fbDoc(db, "appData", "spinnerData"));
+      if (dataSnap.exists()) {
+        const p = dataSnap.data();
+        state.allNames = p.allNames || [];
+        state.available = p.available || [];
+        state.seated = p.seated || [];
+      } else {
+        state.allNames = Array.from({length: 42}, (_, i) => `Siswa ${i + 1}`);
+        state.available = [...state.allNames]; shuffleArray(state.available); state.seated = [];
+        await saveData();
+      }
+
+      // Sembunyikan Loading, Tampilkan Login
+      document.getElementById('loading-screen').classList.add('hidden');
+      document.getElementById('login-view').classList.remove('hidden');
+      
+    } catch (error) {
+      console.error(error);
+      alert("Gagal konek ke Database. Cek Rules Firebase lu (Start in Test Mode).");
+    }
+  };
+
+  async function saveData() {
+    await fbSetDoc(fbDoc(db, "appData", "spinnerData"), { allNames: state.allNames, available: state.available, seated: state.seated });
+  }
+
+  function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } }
+
+  async function doLogin() {
+    const btn = document.getElementById('btn-login');
+    const u = document.getElementById('login-user').value.trim();
+    const p = document.getElementById('login-pass').value.trim();
+    
+    if(!u || !p) return showToast('Isi username dan password!', 'error');
+    
+    btn.innerText = 'Memproses...'; btn.disabled = true;
+    
+    try {
+      const snap = await fbGetDocs(fbQuery(fbCol(db, "users"), fbWhere("username", "==", u), fbWhere("pass", "==", p)));
+      if (!snap.empty) { 
+        currentUser = snap.docs[0].data(); 
+        setupUIForRole(); 
+      } else { 
+        showToast('Username atau password salah!', 'error'); 
+      }
+    } catch(e) {
+      showToast('Error koneksi database', 'error');
+    }
+    
+    btn.innerText = 'Masuk ke Sistem'; btn.disabled = false;
+  }
+
+  function doLogout() { currentUser = null; document.getElementById('login-view').classList.remove('hidden'); document.getElementById('app-view').classList.add('hidden'); }
+
+  function setupUIForRole() {
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('app-view').classList.remove('hidden');
+    const role = currentUser.role, nav = document.getElementById('nav-links'), logo = document.getElementById('logo-brand');
+    
+    if (role === 'developer') {
+      document.documentElement.style.setProperty('--primary', '#8b5cf6');
+      logo.innerHTML = `<span style="background:#8b5cf6">DEV</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link" id="nav-spin" onclick="switchTab('spin')">Spin</div><div class="nav-link" id="nav-plan" onclick="switchTab('plan')">Denah</div><div class="nav-link" id="nav-list" onclick="switchTab('list')">Murid</div><div class="nav-link active" id="nav-manage-users" onclick="switchTab('manage-users')">Kelola Akun</div>`;
+      switchTab('manage-users');
+    } else if (role === 'admin') {
+      document.documentElement.style.setProperty('--primary', '#0ea5e9');
+      logo.innerHTML = `<span style="background:#0ea5e9">ADM</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link active" id="nav-spin" onclick="switchTab('spin')">Spin</div><div class="nav-link" id="nav-plan" onclick="switchTab('plan')">Denah</div><div class="nav-link" id="nav-list" onclick="switchTab('list')">Murid</div>`;
+      switchTab('spin');
+    } else {
+      document.documentElement.style.setProperty('--primary', '#10b981');
+      logo.innerHTML = `<span style="background:#10b981">USR</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link active" id="nav-plan" onclick="switchTab('plan')">Denah Kelas</div>`;
+      switchTab('plan');
+    }
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.view').forEach(v =links" id="nav-links"></div>
     <button class="btn btn-danger" onclick="doLogout()" style="padding: 8px 16px; margin-left: 10px;">Logout</button>
   </div></nav>
 
