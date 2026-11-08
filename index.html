@@ -3,96 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Class Seat Spinner — Premium</title>
+<title>Class Seat Spinner — Firebase</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f8fafc;
-    --surface: #ffffff;
-    --border: #e2e8f0;
-    --text: #0f172a;
-    --text-muted: #64748b;
-    
-    /* Dynamic Colors (diubah via JS pas login) */
-    --primary: #3b82f6;
-    --primary-hover: #2563eb;
-    --primary-light: #eff6ff;
-    
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
-    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
-    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+    --bg: #f8fafc; --surface: #ffffff; --border: #e2e8f0; --text: #0f172a; --text-muted: #64748b;
+    --primary: #3b82f6; --primary-hover: #2563eb; --primary-light: #eff6ff;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05); --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05); --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.03);
   }
-  
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
   body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
   h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; color: #0f172a; }
-  
-  .hidden { display: none !important; }
-  .flex { display: flex; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .justify-center { justify-content: center; }
+  .hidden { display: none !important; } .flex { display: flex; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .justify-center { justify-content: center; }
   .text-muted { color: var(--text-muted); }
   
-  /* BUTTONS */
-  .btn { padding: 12px 20px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; font-family: 'Inter', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-  .btn:active { transform: scale(0.97); }
-  .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  .btn-primary:hover { background: var(--primary-hover); }
-  .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
-  .btn-outline:hover { background: var(--bg); }
-  .btn-danger { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
-  .btn-danger:hover { background: #fee2e2; }
+  .btn { padding: 12px 20px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: all 0.2s; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+  .btn:active { transform: scale(0.97); } .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .btn-primary:hover { background: var(--primary-hover); } .btn-outline { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+  .btn-outline:hover { background: var(--bg); } .btn-danger { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
 
-  /* ══════════════════════════════════════
-     LOGIN PAGE (SPLIT SCREEN AESTHETIC)
-  ══════════════════════════════════════ */
+  /* LOGIN */
   #login-view { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #f1f5f9; }
-  
-  .login-wrapper { display: flex; width: 100%; max-width: 1000px; height: 600px; background: var(--surface); border-radius: 30px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); margin: 20px; }
-  
-  /* Kiri: Ilustrasi */
-  .login-left { flex: 1; background: linear-gradient(135deg, #4f46e5, #0ea5e9); padding: 40px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; color: white; }
-  .login-left::before { content: ''; position: absolute; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); top: -50%; left: -50%; animation: rotate 20s linear infinite; }
-  @keyframes rotate { 100% { transform: rotate(360deg); } }
-  .login-left h1 { color: white; font-size: 36px; line-height: 1.2; margin-bottom: 16px; position: relative; z-index: 1; }
-  .login-left p { font-size: 16px; opacity: 0.9; position: relative; z-index: 1; }
-  .login-icon-big { font-size: 60px; margin-bottom: 20px; position: relative; z-index: 1; }
-
-  /* Kanan: Form */
-  .login-right { flex: 1; padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; background: var(--surface); }
-  .login-right h2 { font-size: 28px; margin-bottom: 8px; }
-  .login-right p { color: var(--text-muted); font-size: 14px; margin-bottom: 30px; }
-
-  @media (max-width: 768px) {
-    .login-wrapper { flex-direction: column; height: auto; max-width: 400px; }
-    .login-left { padding: 30px; text-align: center; }
-    .login-left h1 { font-size: 24px; }
-    .login-icon-big { font-size: 40px; }
-    .login-right { padding: 30px; }
-  }
+  .login-wrapper { display: flex; width: 100%; max-width: 1000px; height: 600px; background: var(--surface); border-radius: 30px; overflow: hidden; box-shadow: var(--shadow-lg); margin: 20px; }
+  .login-left { flex: 1; background: linear-gradient(135deg, #4f46e5, #0ea5e9); padding: 40px; display: flex; flex-direction: column; justify-content: center; color: white; }
+  .login-left h1 { color: white; font-size: 36px; margin-bottom: 16px; }
+  .login-left p { font-size: 16px; opacity: 0.9; }
+  .login-right { flex: 1; padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+  @media (max-width: 768px) { .login-wrapper { flex-direction: column; height: auto; } .login-left { padding: 30px; text-align: center; } .login-right { padding: 30px; } }
 
   .input-group { text-align: left; margin-bottom: 20px; position: relative; }
   .input-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
-  .input-field { width: 100%; padding: 14px 16px 14px 44px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; font-size: 15px; color: var(--text); outline: none; transition: all 0.2s; box-shadow: var(--shadow-inner); }
-  .input-field:focus { background: var(--surface); border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+  .input-field { width: 100%; padding: 14px 16px 14px 44px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; font-size: 15px; outline: none; }
   .input-icon { position: absolute; left: 14px; top: 40px; font-size: 18px; color: var(--text-muted); }
 
-  /* ══════════════════════════════════════
-     NAVBAR
-  ══════════════════════════════════════ */
+  /* NAVBAR */
   .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
   .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-  .logo { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 10px; }
-  .logo span { background: var(--primary); color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-  
-  .nav-links { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-link { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-muted); transition: all 0.2s; white-space: nowrap; }
+  .logo { font-weight: 800; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+  .logo span { background: var(--primary); color: white; padding: 4px 8px; border-radius: 8px; font-size: 12px; }
+  .nav-links { display: flex; gap: 6px; overflow-x: auto; }
+  .nav-link { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-muted); white-space: nowrap; }
   .nav-link.active { background: var(--primary-light); color: var(--primary); }
-  .nav-link:hover:not(.active) { background: var(--bg); color: var(--text); }
 
-  /* ══════════════════════════════════════
-     VIEWS
-  ══════════════════════════════════════ */
+  /* VIEWS */
   .view { display: none; padding: 30px 0; animation: fadeIn 0.3s ease; }
   .view.active { display: block; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -101,38 +55,232 @@
   .spin-container { display: flex; flex-direction: column; align-items: center; gap: 24px; }
   .wheel-wrapper { position: relative; width: 100%; max-width: 400px; aspect-ratio: 1/1; }
   .wheel-canvas { width: 100%; height: 100%; border-radius: 50%; box-shadow: var(--shadow-lg); transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); background: var(--surface); }
-  .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: var(--surface); border: 4px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); z-index: 10; font-size: 24px; }
-  .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #f59e0b; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); z-index: 20; }
-
-  .progress-card { background: var(--surface); padding: 20px; border-radius: 16px; width: 100%; max-width: 500px; box-shadow: var(--shadow-sm); text-align: center; border: 1px solid var(--border); }
+  .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: var(--surface); border: 4px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; font-size: 24px; }
+  .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #f59e0b; z-index: 20; }
+  .progress-card { background: var(--surface); padding: 20px; border-radius: 16px; width: 100%; max-width: 500px; text-align: center; border: 1px solid var(--border); }
   .progress-bar-bg { width: 100%; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; margin-top: 10px; }
   .progress-bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.4s ease; }
-
   .action-buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; width: 100%; max-width: 500px; }
   .action-buttons .btn { flex: 1; min-width: 140px; }
 
-  /* DENAH KELAS */
-  .classroom-container { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 30px 15px; box-shadow: var(--shadow-sm); margin-top: 20px; }
-  .whiteboard { background: #f1f5f9; color: #94a3b8; text-align: center; padding: 16px; border-radius: 12px; font-weight: 700; max-width: 400px; margin: 0 auto 30px auto; border: 2px dashed #cbd5e1; letter-spacing: 2px; }
+  /* DENAH */
+  .classroom-container { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 30px 15px; margin-top: 20px; }
+  .whiteboard { background: #f1f5f9; color: #94a3b8; text-align: center; padding: 16px; border-radius: 12px; font-weight: 700; max-width: 400px; margin: 0 auto 30px auto; border: 2px dashed #cbd5e1; }
   .desk-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 800px; margin: 0 auto; }
-  @media (max-width: 600px) { .desk-grid { gap: 8px; } .desk-card { padding: 10px !important; } }
-  
-  .desk-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; transition: all 0.2s; box-shadow: var(--shadow-sm); }
-  .desk-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  @media (max-width: 600px) { .desk-grid { gap: 8px; } }
+  .desk-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
   .desk-card.filled { background: #f0fdf4; border-color: #bbf7d0; }
-  .desk-card.highlight { border-color: #f59e0b; box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2); }
-  
-  .desk-header { display: flex; justify-content: space-between; align-items: center; font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  .desk-header { display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
   .desk-card.filled .desk-header { color: #166534; border-color: #dcfce7; }
   .seat-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .seat-row:last-child { margin-bottom: 0; }
-  .seat-label { width: 20px; height: 20px; background: var(--bg); border-radius: 4px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--text-muted); flex-shrink: 0; }
-  .seat-name { flex: 1; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-muted); }
+  .seat-label { width: 20px; height: 20px; background: var(--bg); border-radius: 4px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+  .seat-name { flex: 1; font-size: 12px; font-weight: 600; color: var(--text-muted); }
   .seat-name.filled-text { color: #0f172a; }
 
-  /* LIST MURID */
-  .textarea-names { width: 100%; height: 250px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; color: var(--text); font-size: 15px; resize: vertical; outline: none; box-shadow: var(--shadow-inner); transition: all 0.2s; }
-  .textarea-names:focus { background: var(--surface); border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+  /* TABLE */
+  .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 20px; }
+  table { width: 100%; border-collapse: collapse; text-align: left; }
+  th, td { padding: 16px; border-bottom: 1px solid var(--border); font-size: 14px; }
+  th { background: var(--bg); font-weight: 600; color: var(--text-muted); font-size: 12px; }
+  .role-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .role-dev { background: #f3e8ff; color: #7e22ce; } .role-admin { background: #e0f2fe; color: #0369a1; } .role-user { background: #f1f5f9; color: #475569; }
+
+  /* MODAL & TOAST */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal-content { background: var(--surface); padding: 32px; border-radius: 28px; text-align: center; transform: scale(0.8); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90%; width: 380px; }
+  .modal-overlay.show .modal-content { transform: scale(1); }
+  .modal-input { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; font-size: 14px; background: var(--bg); outline: none;}
+  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: #0f172a; color: white; padding: 12px 24px; border-radius: 8px; opacity: 0; transition: all 0.3s; z-index: 2000; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast">Pesan</div>
+
+<!-- LOGIN -->
+<div id="login-view">
+  <div class="login-wrapper">
+    <div class="login-left"><h1>Atur Posisi Duduk Jadi Lebih Seru.</h1><p>Sistem pengacakan tempat duduk kelas modern.</p></div>
+    <div class="login-right">
+      <h2 style="margin-bottom:20px;">Selamat Datang</h2>
+      <div class="input-group"><label>Username</label><span class="input-icon">👤</span><input type="text" id="login-user" class="input-field" placeholder="Username"></div>
+      <div class="input-group"><label>Password</label><span class="input-icon">🔒</span><input type="password" id="login-pass" class="input-field" placeholder="••••••"></div>
+      <button class="btn btn-primary" style="width: 100%; padding: 16px;" onclick="doLogin()">Masuk ke Sistem</button>
+    </div>
+  </div>
+</div>
+
+<!-- APP VIEW -->
+<div id="app-view" class="hidden">
+  <nav class="navbar"><div class="container flex justify-between items-center">
+    <div class="logo" id="logo-brand"><span>CS</span> Class Spinner</div>
+    <div class="nav-links" id="nav-links"></div>
+    <button class="btn btn-danger" onclick="doLogout()" style="padding: 8px 16px; margin-left: 10px;">Logout</button>
+  </div></nav>
+
+  <div class="container">
+    <div class="view" id="view-spin">
+      <div class="spin-container">
+        <div class="wheel-wrapper"><div class="wheel-pointer"></div><canvas id="wheel-canvas" class="wheel-canvas" width="600" height="600"></canvas><div class="wheel-center">🎯</div></div>
+        <div class="progress-card"><div id="progress-text" style="font-weight:700;">0 / 42 Kursi Terisi</div><div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div></div>
+        <div class="action-buttons"><button class="btn btn-primary" id="btn-spin" onclick="manualSpin()" style="flex: 2;">SPIN NOW</button><button class="btn btn-outline" onclick="resetAll()">RESET</button></div>
+      </div>
+    </div>
+
+    <div class="view" id="view-plan">
+      <div class="flex justify-between items-center" style="margin-bottom: 10px;">
+        <h2>Denah Kelas</h2>
+        <button class="btn btn-outline" onclick="copyRekap()">📋 Copy Rekap</button>
+      </div>
+      <div class="classroom-container"><div class="whiteboard">PAPAN TULIS (DEPAN)</div><div class="desk-grid" id="desk-grid"></div></div>
+    </div>
+
+    <div class="view" id="view-list" style="max-width: 700px; margin: 0 auto;">
+      <h2 style="margin-bottom:15px;">Daftar Nama Murid</h2>
+      <textarea id="input-names" style="width: 100%; height: 250px; padding: 16px; border-radius: 12px; border: 1px solid var(--border); outline:none;"></textarea>
+      <div style="margin-top: 15px; text-align: right;"><button class="btn btn-primary" onclick="saveNames()">💾 SIMPAN DAFTAR</button></div>
+    </div>
+
+    <div class="view" id="view-manage-users">
+      <div class="flex justify-between items-center" style="margin-bottom: 20px;">
+        <h2>Kelola Pengguna</h2><button class="btn btn-primary" onclick="openUserModal()">➕ Buat Akun Baru</button>
+      </div>
+      <div class="table-container"><table><thead><tr><th>Username</th><th>Role</th><th>Aksi</th></tr></thead><tbody id="user-table-body"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="popup-spin">
+  <div class="modal-content"><div style="font-size:40px; margin-bottom:10px;">🎉</div><h3 id="popup-name" style="color:var(--primary);">Nama</h3><p id="popup-seat" style="margin-bottom:20px;">Meja 1 - Kursi A</p><button class="btn btn-primary" style="width:100%;" onclick="closePopup('popup-spin')">Tutup & Lanjut</button></div>
+</div>
+
+<div class="modal-overlay" id="popup-user">
+  <div class="modal-content">
+    <h3 style="margin-bottom:15px;">Buat Akun Baru</h3>
+    <input type="text" id="new-user-name" class="modal-input" placeholder="Username">
+    <input type="text" id="new-user-pass" class="modal-input" placeholder="Password">
+    <select id="new-user-role" class="modal-input"><option value="user">User</option><option value="admin">Admin</option></select>
+    <div style="display: flex; gap: 10px; margin-top: 20px;"><button class="btn btn-outline" style="flex:1;" onclick="closePopup('popup-user')">Batal</button><button class="btn btn-primary" style="flex:1;" onclick="saveNewUser()">Simpan</button></div>
+  </div>
+</div>
+
+<!-- FIREBASE SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQwwgvic_FAefgxi5TDRWsNXzH3ewlQNo",
+    authDomain: "clase-cbd9b.firebaseapp.com",
+    projectId: "clase-cbd9b",
+    storageBucket: "clase-cbd9b.firebasestorage.app",
+    messagingSenderId: "475871117428",
+    appId: "1:475871117428:web:41544eb142073be01a1121",
+    measurementId: "G-N98X5H2MG8"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.fb = { db, collection, doc, getDoc, getDocs, setDoc, deleteDoc, query, where };
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+<!-- APP LOGIC -->
+<script>
+  const TOTAL_DESKS = 21, TOTAL_CAPACITY = 42;
+  let currentUser = null, db, fbCol, fbDoc, fbGetDoc, fbGetDocs, fbSetDoc, fbDeleteDoc, fbQuery, fbWhere;
+  let state = { allNames: [], available: [], seated: [], isSpinning: false, currentAngle: 0 };
+
+  window.addEventListener('firebase-ready', async () => {
+    const f = window.fb;
+    db = f.db; fbCol = f.collection; fbDoc = f.doc; fbGetDoc = f.getDoc; fbGetDocs = f.getDocs; fbSetDoc = f.setDoc; fbDeleteDoc = f.deleteDoc; fbQuery = f.query; fbWhere = f.where;
+    await initApp();
+  });
+
+  async function initApp() {
+    const usersSnap = await fbGetDocs(fbCol(db, "users"));
+    if (usersSnap.empty) {
+      await fbSetDoc(fbDoc(db, "users", "developer"), { username: "developer", pass: "dev123", role: "developer" });
+      await fbSetDoc(fbDoc(db, "users", "admin"), { username: "admin", pass: "admin123", role: "admin" });
+      await fbSetDoc(fbDoc(db, "users", "user"), { username: "user", pass: "user123", role: "user" });
+    }
+
+    const dataSnap = await fbGetDoc(fbDoc(db, "appData", "spinnerData"));
+    if (dataSnap.exists()) {
+      const p = dataSnap.data();
+      state.allNames = p.allNames || [];
+      state.available = p.available || [];
+      state.seated = p.seated || [];
+    } else {
+      state.allNames = Array.from({length: 42}, (_, i) => `Siswa ${i + 1}`);
+      state.available = [...state.allNames]; shuffleArray(state.available); state.seated = [];
+      await saveData();
+    }
+  }
+
+  async function saveData() {
+    await fbSetDoc(fbDoc(db, "appData", "spinnerData"), { allNames: state.allNames, available: state.available, seated: state.seated });
+  }
+
+  function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } }
+
+  async function doLogin() {
+    const u = document.getElementById('login-user').value.trim();
+    const p = document.getElementById('login-pass').value.trim();
+    const snap = await fbGetDocs(fbQuery(fbCol(db, "users"), fbWhere("username", "==", u), fbWhere("pass", "==", p)));
+    if (!snap.empty) { currentUser = snap.docs[0].data(); setupUIForRole(); } 
+    else { showToast('Username atau password salah!', 'error'); }
+  }
+
+  function doLogout() { currentUser = null; document.getElementById('login-view').style.display = 'flex'; document.getElementById('app-view').classList.add('hidden'); }
+
+  function setupUIForRole() {
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('app-view').classList.remove('hidden');
+    const role = currentUser.role, nav = document.getElementById('nav-links'), logo = document.getElementById('logo-brand');
+    
+    if (role === 'developer') {
+      document.documentElement.style.setProperty('--primary', '#8b5cf6');
+      logo.innerHTML = `<span style="background:#8b5cf6">DEV</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link" id="nav-spin" onclick="switchTab('spin')">Spin</div><div class="nav-link" id="nav-plan" onclick="switchTab('plan')">Denah</div><div class="nav-link" id="nav-list" onclick="switchTab('list')">Murid</div><div class="nav-link active" id="nav-manage-users" onclick="switchTab('manage-users')">Kelola Akun</div>`;
+      switchTab('manage-users');
+    } else if (role === 'admin') {
+      document.documentElement.style.setProperty('--primary', '#0ea5e9');
+      logo.innerHTML = `<span style="background:#0ea5e9">ADM</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link active" id="nav-spin" onclick="switchTab('spin')">Spin</div><div class="nav-link" id="nav-plan" onclick="switchTab('plan')">Denah</div><div class="nav-link" id="nav-list" onclick="switchTab('list')">Murid</div>`;
+      switchTab('spin');
+    } else {
+      document.documentElement.style.setProperty('--primary', '#10b981');
+      logo.innerHTML = `<span style="background:#10b981">USR</span> Class Spinner`;
+      nav.innerHTML = `<div class="nav-link active" id="nav-plan" onclick="switchTab('plan')">Denah Kelas</div>`;
+      switchTab('plan');
+    }
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+    document.getElementById(`view-${tab}`).classList.add('active');
+    const n = document.getElementById(`nav-${tab}`); if(n) n.classList.add('active');
+    if (tab === 'plan') renderLayout(); if (tab === 'spin') drawWheel(); if (tab === 'manage-users') renderUsersTable();
+    if (tab === 'list') document.getElementById('input-names').value = state.allNames.join('\n');
+  }
+
+  function showToast(msg, type = 'success') { const t = document.getElementById('toast'); t.innerText = msg; t.style.background = type === 'error' ? '#ef4444' : '#0f172a'; t.className = 'toast show'; setTimeout(() => t.className = 'toast', 3000); }
+
+  function getNextSeat() { const i = state.seated.length; if(i>=42) return null; return { desk: Math.floor(i/2)+1, seat: i%2===0?'A':'B' }; }
+  function manualSpin() { if(currentUser.role==='user' || state.isSpinning || state.available.length===0) return; triggerSpin(); }
+  
+  function triggerSpin() {
+    state.isSpinning = true; document.getElementById('btn-spin').innerText = 'SPINNING...'; document.getElementById('btn-spin').disabled = true;
+    const winIdx = Math.floor(Math.random() * state.available.length), winName = state.available[winIdx];
+    const canvas = document.getElementById('wheel-canvas'), seg = 360 / state.available.length, target = (360 - (winIdx * seg) - (seg / 2));
+    const spins = 5 + Math.floor(Math.random() * 3), newTotal = state.currentAngle + (360 * spins) + (target - (state.currentAngle % 360));
+    state.currentAngle = newTotal; canvas.style.transform = `rotand: var(--surface); border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
 
   /* MANAJEMEN USER */
   .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); margin-top: 20px; }
